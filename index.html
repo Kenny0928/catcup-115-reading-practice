@@ -1,0 +1,2737 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>115 貓咪盃讀題塗色互動練習｜23 題完整實戰題庫</title>
+  <style>
+    :root {
+      --navy: #1b2a4a;
+      --navy-2: #2a3f6b;
+      --bg: #eef2f7;
+      --surface: #ffffff;
+      --border: #d5dfec;
+      --text: #1e293b;
+      --muted: #5b6b82;
+
+      --red: #dc2626;
+      --red-hl: rgba(239, 68, 68, 0.25);
+      --red-bg: #fef2f2;
+
+      --amber: #d97706;
+      --amber-hl: rgba(245, 158, 11, 0.32);
+      --amber-bg: #fffbeb;
+
+      --green: #059669;
+      --green-hl: rgba(16, 185, 129, 0.27);
+      --green-bg: #ecfdf5;
+
+      --blue: #2563eb;
+      --blue-hl: rgba(59, 130, 246, 0.25);
+      --blue-bg: #eff6ff;
+
+      --purple: #7c3aed;
+      --purple-bg: #f5f3ff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.72;
+    }
+
+    /* Sticky Topbar */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--navy);
+      color: #fff;
+      box-shadow: 0 3px 14px rgba(15, 23, 42, 0.2);
+    }
+
+    .topbar-row1 {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 9px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .brand-badge {
+      background: var(--blue);
+      color: #fff;
+      font-size: 11.5px;
+      padding: 2px 9px;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+
+    .cat-tabs, .mode-switch {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .cat-btn {
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.08);
+      color: #e2e8f0;
+      padding: 5px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: inherit;
+      transition: all 0.15s ease;
+    }
+    .cat-btn:hover { background: rgba(255,255,255,0.18); color: #fff; }
+    .cat-btn[aria-pressed="true"] {
+      background: #fff;
+      color: var(--navy);
+      border-color: #fff;
+    }
+
+    .mode-btn {
+      border: 1px solid rgba(255,255,255,0.25);
+      background: transparent;
+      color: #cbd5e1;
+      padding: 5px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: inherit;
+    }
+    .mode-btn[aria-pressed="true"] {
+      background: #f59e0b;
+      color: #1e293b;
+      border-color: #f59e0b;
+    }
+
+    /* Exam Picker Strip */
+    .topbar-picker {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 7px 20px;
+      background: var(--navy-2);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+
+    .exam-chip {
+      flex: 0 0 auto;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.08);
+      color: #e2e8f0;
+      padding: 4px 10px;
+      border-radius: 7px;
+      font-size: 12.5px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.12s ease;
+    }
+    .exam-chip:hover { background: rgba(255,255,255,0.2); color: #fff; }
+    .exam-chip[aria-pressed="true"] {
+      background: #38bdf8;
+      color: #0f172a;
+      border-color: #38bdf8;
+      font-weight: 800;
+    }
+    .exam-chip .chip-score {
+      margin-left: 4px;
+      font-size: 11px;
+      padding: 1px 5px;
+      border-radius: 4px;
+      background: rgba(16, 185, 129, 0.9);
+      color: #fff;
+    }
+
+    /* Highlighter Toolbar */
+    .topbar-row2 {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 9px 20px;
+      background: #ffffff;
+      color: var(--text);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pen-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .pen-label { font-size: 13px; font-weight: 700; color: var(--muted); }
+
+    .pen-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      border-radius: 9px;
+      border: 2px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.12s ease;
+    }
+    .pen-btn:hover { transform: translateY(-1px); }
+    .pen-btn kbd {
+      font-family: ui-monospace, monospace;
+      font-size: 11px;
+      padding: 1px 4px;
+      border-radius: 4px;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: #475569;
+    }
+
+    .pen-btn[data-pen="core"][aria-pressed="true"]  { background: var(--red-bg);   border-color: var(--red);   color: var(--red);   box-shadow: 0 0 0 3px rgba(220,38,38,0.16); }
+    .pen-btn[data-pen="bonus"][aria-pressed="true"] { background: var(--amber-bg); border-color: var(--amber); color: var(--amber); box-shadow: 0 0 0 3px rgba(217,119,6,0.18); }
+    .pen-btn[data-pen="goal"][aria-pressed="true"]  { background: var(--green-bg); border-color: var(--green); color: var(--green); box-shadow: 0 0 0 3px rgba(5,150,105,0.16); }
+    .pen-btn[data-pen="theme"][aria-pressed="true"] { background: var(--blue-bg);  border-color: var(--blue);  color: var(--blue);  box-shadow: 0 0 0 3px rgba(37,99,235,0.16); }
+    .pen-btn[data-pen="eraser"][aria-pressed="true"]{ background: #f1f5f9;         border-color: #475569;      color: #0f172a;      box-shadow: 0 0 0 3px rgba(71,85,105,0.14); }
+
+    .action-group { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; }
+
+    .btn {
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn:hover { background: #f8fafc; border-color: #94a3b8; }
+    .btn-primary { background: var(--blue); color: #fff; border-color: var(--blue); }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-success { background: var(--green); color: #fff; border-color: var(--green); }
+    .btn-success:hover { background: #047857; }
+    .btn-danger { color: var(--red); border-color: #fecaca; }
+    .btn-danger:hover { background: var(--red-bg); }
+
+    /* Main Workspace */
+    .workspace {
+      max-width: 1480px;
+      margin: 18px auto 40px;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.85fr) minmax(330px, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+    @media (max-width: 1024px) { .workspace { grid-template-columns: 1fr; } }
+
+    /* Official PDF Paper Style (Dense Competition Look) */
+    .paper {
+      background: #fff;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      box-shadow: 0 8px 28px rgba(15, 23, 42, 0.08);
+      padding: 32px 36px 38px;
+    }
+
+    .paper-title {
+      text-align: center;
+      font-family: "BiauKaiTC", "DFKai-SB", "PingFang TC", serif;
+      font-size: 23px;
+      font-weight: 700;
+      margin: 0 0 3px;
+      color: #0f172a;
+      letter-spacing: 1px;
+    }
+
+    .paper-subtitle {
+      text-align: center;
+      font-family: "BiauKaiTC", "DFKai-SB", "PingFang TC", serif;
+      font-size: 19px;
+      font-weight: 700;
+      margin: 0 0 16px;
+      color: #0f172a;
+    }
+
+    .hint-banner {
+      background: #f8fafc;
+      border: 1px dashed #94a3b8;
+      border-radius: 8px;
+      padding: 9px 13px;
+      margin-bottom: 14px;
+      font-size: 13px;
+      color: #334155;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .official-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 2px solid #1e293b;
+      font-size: 15.5px;
+      line-height: 1.82;
+    }
+
+    .official-table th, .official-table td {
+      border: 1px solid #334155;
+      padding: 12px 15px;
+      vertical-align: top;
+      text-align: justify;
+    }
+
+    .official-table th {
+      width: 88px;
+      text-align: center;
+      vertical-align: middle;
+      background: #f8fafc;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: 2px;
+    }
+
+    .task-block { margin-bottom: 12px; }
+    .task-block:last-child { margin-bottom: 0; }
+    .task-heading { font-weight: 700; color: #0f172a; margin-bottom: 2px; }
+
+    /* Seamless Interactive Segments (Looks like plain PDF text until hovered/marked) */
+    .seg {
+      display: inline;
+      padding: 1px 2px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background-color 0.12s ease;
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+    }
+
+    .seg:hover {
+      background-color: rgba(148, 163, 184, 0.22);
+      outline: 1px dashed #64748b;
+    }
+
+    .seg[data-marked="core"]  { background-color: var(--red-hl);   box-shadow: inset 0 -2px 0 var(--red); }
+    .seg[data-marked="bonus"] { background-color: var(--amber-hl); box-shadow: inset 0 -2px 0 var(--amber); }
+    .seg[data-marked="goal"]  { background-color: var(--green-hl); box-shadow: inset 0 -2px 0 var(--green); }
+    .seg[data-marked="theme"] { background-color: var(--blue-hl);  box-shadow: inset 0 -2px 0 var(--blue); }
+
+    .seg.grade-correct::after {
+      content: "✓";
+      display: inline-block;
+      margin-left: 3px;
+      font-size: 11px;
+      font-weight: 900;
+      color: #fff;
+      background: var(--green);
+      border-radius: 999px;
+      padding: 0 5px;
+      vertical-align: middle;
+    }
+    .seg.grade-wrong-color { outline: 2px dotted var(--amber); }
+    .seg.grade-wrong-color::after {
+      content: "換色";
+      display: inline-block;
+      margin-left: 3px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      background: var(--amber);
+      border-radius: 4px;
+      padding: 0 4px;
+      vertical-align: middle;
+    }
+    .seg.grade-missed {
+      outline: 2px dashed var(--red);
+      background-color: rgba(239, 68, 68, 0.08);
+    }
+    .seg.grade-missed::after {
+      content: "漏抓";
+      display: inline-block;
+      margin-left: 3px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      background: var(--red);
+      border-radius: 4px;
+      padding: 0 4px;
+      vertical-align: middle;
+    }
+    .seg.grade-extra { text-decoration: line-through; opacity: 0.7; }
+
+    /* Right Sidebar */
+    .sidebar {
+      position: sticky;
+      top: 158px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-height: calc(100vh - 172px);
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .panel {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 15px 17px;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+    }
+
+    .panel-title {
+      margin: 0 0 10px;
+      font-size: 15.5px;
+      font-weight: 700;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .score-box {
+      display: none;
+      background: linear-gradient(135deg, #1b2a4a, #2a3f6b);
+      color: #fff;
+      border-radius: 10px;
+      padding: 13px 15px;
+      margin-bottom: 12px;
+    }
+    .score-box.show { display: block; }
+    .score-num { font-size: 30px; font-weight: 800; line-height: 1.1; }
+    .score-stats {
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+      margin-top: 7px;
+      font-size: 12px;
+      color: #e2e8f0;
+    }
+
+    .trap-box {
+      display: none;
+      background: var(--purple-bg);
+      border: 1px solid #ddd6fe;
+      border-left: 4px solid var(--purple);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      font-size: 13px;
+      color: #3b0764;
+    }
+    .trap-box.show { display: block; }
+
+    .checklist-group { margin-bottom: 10px; }
+    .checklist-group:last-child { margin-bottom: 0; }
+    .cg-header {
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 6px;
+      margin-bottom: 5px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .cg-header.core  { background: var(--red-bg);   color: var(--red); }
+    .cg-header.bonus { background: var(--amber-bg); color: var(--amber); }
+    .cg-header.goal  { background: var(--green-bg); color: var(--green); }
+    .cg-header.theme { background: var(--blue-bg);  color: var(--blue); }
+
+    .cg-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 5px; }
+    .cg-item {
+      font-size: 12.5px;
+      padding: 5px 8px;
+      border-radius: 6px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .cg-item:hover { background: #f1f5f9; }
+    .cg-empty { font-size: 12px; color: #94a3b8; padding: 2px 8px; }
+
+    .explain-box {
+      background: #f8fafc;
+      border-left: 4px solid var(--navy);
+      border-radius: 6px;
+      padding: 10px 12px;
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .timer-pill {
+      font-family: ui-monospace, monospace;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: #f1f5f9;
+      color: var(--navy);
+      border: 1px solid #cbd5e1;
+      cursor: pointer;
+    }
+
+    @media print {
+      .topbar, .hint-banner, .action-group, .no-print, .entry-overlay { display: none !important; }
+      .workspace { display: block; margin: 0; padding: 0; }
+      .paper { box-shadow: none; border: none; padding: 0; }
+      .sidebar { position: static; max-height: none; margin-top: 20px; }
+    }
+
+    /* Entry Selection Overlay */
+    .entry-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: linear-gradient(135deg, #1b2a4a 0%, #243b6b 55%, #16223d 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .entry-overlay.hidden { display: none; }
+
+    .entry-card-wrap {
+      max-width: 860px;
+      width: 100%;
+      text-align: center;
+      color: #fff;
+    }
+    .entry-badge {
+      display: inline-block;
+      background: rgba(59, 130, 246, 0.25);
+      border: 1px solid rgba(96, 165, 250, 0.55);
+      color: #bfdbfe;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+    .entry-title {
+      font-size: 34px;
+      font-weight: 800;
+      margin: 0 0 8px;
+      letter-spacing: 0.5px;
+    }
+    .entry-sub {
+      font-size: 16px;
+      color: #cbd5e1;
+      margin: 0 0 30px;
+    }
+    .entry-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 680px) { .entry-grid { grid-template-columns: 1fr; } }
+
+    .entry-choice {
+      background: #ffffff;
+      color: var(--text);
+      border: 3px solid transparent;
+      border-radius: 16px;
+      padding: 28px 24px;
+      text-align: left;
+      cursor: pointer;
+      font-family: inherit;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.28);
+      transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+    .entry-choice:hover { transform: translateY(-4px); box-shadow: 0 20px 44px rgba(0, 0, 0, 0.35); }
+    .entry-choice.elem:hover { border-color: #10b981; }
+    .entry-choice.jh:hover   { border-color: #3b82f6; }
+
+    .choice-tag {
+      display: inline-block;
+      font-size: 12.5px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+    .entry-choice.elem .choice-tag { background: var(--green-bg); color: var(--green); }
+    .entry-choice.jh   .choice-tag { background: var(--blue-bg);  color: var(--blue); }
+
+    .choice-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--navy);
+      margin: 0 0 8px;
+    }
+    .choice-desc {
+      font-size: 14px;
+      color: var(--muted);
+      margin: 0 0 14px;
+      line-height: 1.6;
+    }
+    .choice-meta {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy);
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+
+    .entry-teacher-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #e2e8f0;
+      padding: 9px 20px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .entry-teacher-btn:hover { background: rgba(255, 255, 255, 0.22); color: #fff; }
+
+    .home-btn {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 7px;
+      font-size: 12.5px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    .home-btn:hover { background: rgba(255, 255, 255, 0.24); }
+  </style>
+</head>
+<body>
+
+<!-- Entry Selection Screen -->
+<div class="entry-overlay" id="entryOverlay" role="dialog" aria-modal="true" aria-label="選擇組別">
+  <div class="entry-card-wrap">
+    <div class="entry-badge">115 學年度花蓮縣貓咪盃 SCRATCH AI 互動程式設計集訓</div>
+    <h1 class="entry-title">讀題四色塗色互動練習</h1>
+    <p class="entry-sub">請先選擇你的組別，進入對應的題目卷與實戰題庫！</p>
+
+    <div class="entry-grid">
+      <button class="entry-choice elem" id="chooseElem">
+        <span class="choice-tag">🟩 國小組</span>
+        <div class="choice-title">國小遊戲 AI 互動組</div>
+        <p class="choice-desc">收錄今年官方初賽題《救回媽媽的 LINE！》，以及 10 題由淺入深、暗藏陷阱的校園生活實戰練習題（E01–E10）。</p>
+        <div class="choice-meta">📌 1 題官方示範 ＋ 10 題實戰練習（共 11 題）→</div>
+      </button>
+
+      <button class="entry-choice jh" id="chooseJH">
+        <span class="choice-tag">🟦 國中組</span>
+        <div class="choice-title">國中生活 AI ＋ AI 智慧生活組</div>
+        <p class="choice-desc">收錄今年兩組官方初賽題，以及 10 題結合 Facemesh / Handpose 與 ML2Scratch 的進階陷阱實戰題（J01–J10）。</p>
+        <div class="choice-meta">📌 2 題官方示範 ＋ 10 題實戰練習（共 12 題）→</div>
+      </button>
+    </div>
+
+    <button class="entry-teacher-btn" id="chooseTeacher">🎓 老師示範入口（檢視全部 23 題＋預設示範模式）</button>
+  </div>
+</div>
+
+<header class="topbar">
+  <div class="topbar-row1">
+    <div class="brand">
+      <button class="home-btn" id="btnHome" title="回到組別選擇畫面">🏠 切換組別</button>
+      <span class="brand-badge" id="levelBadge">115 花蓮貓咪盃</span>
+      <span>讀題四色塗色實戰</span>
+    </div>
+
+    <div class="cat-tabs" id="catTabs" role="group" aria-label="切換題庫分類"></div>
+
+    <div class="mode-switch" role="group" aria-label="切換模式">
+      <button class="mode-btn" data-mode="demo" aria-pressed="true">🎓 老師示範模式</button>
+      <button class="mode-btn" data-mode="quiz" aria-pressed="false">🎮 學生闖關模式</button>
+    </div>
+  </div>
+
+  <div class="topbar-picker" id="examPicker" role="group" aria-label="選擇題目"></div>
+
+  <div class="topbar-row2">
+    <div class="pen-group" role="group" aria-label="螢光筆工具列">
+      <span class="pen-label">螢光筆：</span>
+      <button class="pen-btn" data-pen="core" aria-pressed="true" title="一定要做的，少做或做不完全都沒辦法得分">🟥 題目核心（必做） <kbd>1</kbd></button>
+      <button class="pen-btn" data-pen="bonus" aria-pressed="false" title="有做有加分">🟨 加分項 <kbd>2</kbd></button>
+      <button class="pen-btn" data-pen="goal" aria-pressed="false" title="玩家或使用者要完成的目標，寫進程式說明文件">🟩 任務目標 <kbd>3</kbd></button>
+      <button class="pen-btn" data-pen="theme" aria-pressed="false" title="情境主題，偏離就拿不到分">🟦 作品主題 <kbd>4</kbd></button>
+      <button class="pen-btn" data-pen="eraser" aria-pressed="false">🧹 橡皮擦 <kbd>E</kbd></button>
+    </div>
+
+    <div class="action-group">
+      <span class="timer-pill" id="timerDisplay" title="點擊暫停／繼續計時">⏱ 00:00</span>
+      <button class="btn btn-success" id="btnGrade" style="display:none;">✅ 交卷批改</button>
+      <button class="btn btn-primary" id="btnReveal">👀 揭曉標準畫法</button>
+      <button class="btn btn-danger" id="btnClear">🔄 清除本題</button>
+    </div>
+  </div>
+</header>
+
+<main class="workspace">
+  <section class="paper" aria-label="官方格式題目卷">
+    <h1 class="paper-title">花蓮縣國民中小學 115 學年度貓咪盃競賽</h1>
+    <div class="paper-subtitle" id="paperSub">模擬實戰題目</div>
+
+    <div class="hint-banner">
+      <span id="modeHint"></span>
+      <span id="progressText" style="font-weight:700; color:var(--navy);"></span>
+    </div>
+
+    <table class="official-table" id="examTable"></table>
+  </section>
+
+  <aside class="sidebar">
+    <div class="panel">
+      <div class="score-box" id="scoreBox">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <div style="font-size:11.5px; opacity:0.85;">本題闖關成績</div>
+            <div class="score-num" id="scoreNum">0 分</div>
+          </div>
+          <div style="font-size:14.5px; font-weight:700;" id="scoreBadge">繼續加油！</div>
+        </div>
+        <div class="score-stats" id="scoreStats"></div>
+      </div>
+
+      <div class="trap-box" id="trapBox">
+        <strong>🕵️ 本題暗藏陷阱／考點解析：</strong>
+        <div id="trapText" style="margin-top:4px;"></div>
+      </div>
+
+      <h2 class="panel-title">
+        <span>📋 即時文本分析筆記</span>
+        <span class="no-print" style="display:flex; gap:5px;">
+          <button class="btn" id="btnCopy" style="padding:3px 8px; font-size:12px;">📋 複製</button>
+          <button class="btn" id="btnPrint" style="padding:3px 8px; font-size:12px;">🖨️ 列印</button>
+        </span>
+      </h2>
+      <div id="checklistContainer"></div>
+    </div>
+
+    <div class="panel">
+      <h2 class="panel-title">💡 點選句子解析</h2>
+      <div class="explain-box" id="explainBox">
+        點選題目中任何一段已塗色（或批改後）的文字，這裡會告訴你<strong>「為什麼歸在這一類／評審會怎麼看」</strong>！
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+const PEN_META = {
+  core:  { name: "題目核心（必做）", emoji: "🟥" },
+  bonus: { name: "加分項",           emoji: "🟨" },
+  goal:  { name: "任務目標",         emoji: "🟩" },
+  theme: { name: "作品主題",         emoji: "🟦" },
+};
+
+const EXAMS = [
+  {
+    "id": "off_elem",
+    "cat": "official",
+    "code": "示範1",
+    "short": "國小官方：救回媽媽的 LINE",
+    "groupHtml": "□國小動畫 AI 互動組 &nbsp;<strong>■國小遊戲 AI 互動組</strong><br>□國中生活 AI 互動組 &nbsp;□國中 AI 智慧生活組",
+    "title": "救回媽媽的 LINE！網路詐騙大追蹤",
+    "trapSummary": "必做與加分的分界（AI 辨識為非必要加分）、數字門檻（≥6 線索找 ≥3 個、≥5 題 80 分）、指定文字「再接再厲！」與重答歸零。",
+    "context": [
+      {
+        "id": "oe_c1",
+        "text": "小明的媽媽平常喜歡使用 LINE、瀏覽網路資訊，卻覺得資安設定麻煩又難學，因此沒有做好帳號安全防護。一天，媽媽不小心點擊 LINE 中的詐騙連結，導致 LINE 密碼遭到變更、帳號無法登入，最後只好重新申辦帳號，也失去了原本珍貴的好友資料。",
+        "ans": "theme",
+        "why": "【作品主題】LINE 網路詐騙與帳號安全防護。整個作品畫面、劇情與互動都要扣緊這個主題，不能偏離。"
+      },
+      {
+        "id": "oe_c2",
+        "text": "小明決定尋求 AI 機器人夥伴「小智」的協助，玩家將化身為小智，協助小明找出詐騙陷阱、強化帳號安全，並學習正確的網路安全知識，幫助媽媽重新建立安全的上網習慣。",
+        "ans": "goal",
+        "why": "【任務目標】這就是玩家在遊戲裡要達成的總目標，寫程式說明文件第 1 題「玩家目標」時直接扣緊這段！"
+      }
+    ],
+    "tasks": [
+      {
+        "heading": "1. 找出詐騙訊息",
+        "segs": [
+          {
+            "id": "oe_t1",
+            "text": "玩家在一堆訊息中尋找可疑訊息與詐騙線索，",
+            "ans": "goal",
+            "why": "【任務目標】第一關引導玩家辨識並挑出詐騙訊息（對應說明文件「任務一」）。"
+          },
+          {
+            "id": "oe_t2",
+            "text": "場景中至少放置 6 個訊息線索，玩家須判斷並找出至少 3 個詐騙或可疑訊息後進入下一關。",
+            "ans": "core",
+            "why": "【題目核心】必做數字門檻：至少 6 個線索、找出至少 3 個才可進下一關。"
+          },
+          {
+            "id": "oe_t3",
+            "text": "（例如：可疑陌生連結、免費中獎等誘人訊息、要求提供個資的訊息）",
+            "ans": null,
+            "why": "這是題目給的訊息內容舉例，屬於補充參考，不需特別畫線。"
+          }
+        ]
+      },
+      {
+        "heading": "2. 守住媽媽的 LINE 帳號",
+        "segs": [
+          {
+            "id": "oe_t4",
+            "text": "玩家協助媽媽重新設定帳號安全防護，",
+            "ans": "goal",
+            "why": "【任務目標】第二關引導玩家幫媽媽建立帳號防護（對應說明文件「任務二」）。"
+          },
+          {
+            "id": "oe_t5",
+            "text": "須包括設定安全密碼、開啟登入驗證。",
+            "ans": "core",
+            "why": "【題目核心】這兩項防護設定都是必做，缺一不可。"
+          },
+          {
+            "id": "oe_t6",
+            "text": "備註：參賽者可自行加入 AI 身分辨識功能，使用 AI 模型進行手部或臉部辨識，完成辨識可獲得額外加分，本功能非必要任務。（例如：手勢、表情辨識）",
+            "ans": "bonus",
+            "why": "【加分項】明確標示非必要但可額外加分！必做核心都穩了再加，並寫進說明文件「自行增加任務」。"
+          }
+        ]
+      },
+      {
+        "heading": "3. 資安小偵探大考驗",
+        "segs": [
+          {
+            "id": "oe_t7",
+            "text": "玩家完成至少 5 題網路安全是非題，滿分 100 分，80 分以上即可過關；未達 80 分則顯示「再接再厲！」並提供重新答題功能。",
+            "ans": "core",
+            "why": "【題目核心】題數 ≥ 5 題、滿分 100、80 分過關、未達一字不差顯示「再接再厲！」且重答須歸零。"
+          }
+        ]
+      }
+    ],
+    "docReq": "1. 玩家在這個遊戲的目標是？（對應 🟩 任務目標）<br>2. 這個遊戲的規則條件及玩家任務挑戰（對應 🟥 題目核心 ＋ 🟨 加分項）。"
+  },
+  {
+    "id": "off_jhl",
+    "cat": "official",
+    "code": "示範2",
+    "short": "國中生活官方：校園無人商店",
+    "groupHtml": "□國小動畫 AI 互動組 &nbsp;□國小遊戲 AI 互動組<br><strong>■國中生活 AI 互動組</strong> &nbsp;□國中 AI 智慧生活組",
+    "title": "AI 無接觸校園無人商店",
+    "trapSummary": "全程禁用鍵盤滑鼠、進臉部畫面先回中央、結帳先分開再捏合、3 個對應清單＋迴圈、最後只四捨五入 1 次、邊界值 100/200/300。",
+    "context": [
+      {
+        "id": "ol_c1",
+        "text": "學校規劃設置販售飲料與點心的無人商店，販售礦泉水、鮮奶、蘇打餅乾與巧克力等校園常見商品。",
+        "ans": "theme",
+        "why": "【作品主題】校園飲料與點心無人商店，畫面與商品設定須扣緊主題。"
+      },
+      {
+        "id": "ol_c2",
+        "text": "請設計一套無接觸購物系統：以臉部位置選擇功能、以手指姿勢決定數量，最後以捏合手勢完成結帳。系統須記錄購物清單，並依消費金額計算折扣、贈品與實付金額。",
+        "ans": "goal",
+        "why": "【任務目標】使用者透過三種無接觸互動完成選購、確認與結帳，說明文件第 1 題須對應這段。"
+      }
+    ],
+    "tasks": [
+      {
+        "heading": "一、無接觸操作與防誤觸規範",
+        "segs": [
+          {
+            "id": "ol_t1",
+            "text": "本題採單人操作，各階段只採用指定的操作判斷。",
+            "ans": null,
+            "why": "操作前提說明。"
+          },
+          {
+            "id": "ol_t2",
+            "text": "使用 Facemesh2Scratch 與 Handpose2Scratch；除點擊綠旗啟動或重新開始外，購物過程不得使用鍵盤或滑鼠。",
+            "ans": "core",
+            "why": "【題目核心】指定兩個 AI 模組，且全程禁用鍵盤滑鼠！"
+          },
+          {
+            "id": "ol_t3",
+            "text": "臉部選擇讀取鼻尖（第 2 點）X 座標分左、中、右，同側連續停留 2 秒執行一次；回到中央、改變側別或未偵測到人臉時時間歸零；每次進入臉部畫面須先偵測到鼻尖在中央才開始接受左右選擇並重計。",
+            "ans": "core",
+            "why": "【題目核心】停留 2 秒、歸零條件與「先回中央」防誤觸皆為必測項目。"
+          },
+          {
+            "id": "ol_t4",
+            "text": "數量畫面以 Handpose2Scratch 單手食指(1份)、食+中(2份)、食+中+無名(3份)，同一手勢維持 1 秒確定；結帳畫面須先偵測到拇指尖(第5點)與食指尖(第9點)分開再捏合才完成訂單，每筆訂單只完成一次。",
+            "ans": "core",
+            "why": "【題目核心】手勢 1 秒判定、「先分開再捏合」與單次完成鎖定。"
+          }
+        ]
+      },
+      {
+        "heading": "二、清單、取消與折扣規則",
+        "segs": [
+          {
+            "id": "ol_t5",
+            "text": "取消只捨棄本次尚未加入的商品，不刪除購物車內原有商品；購物車為空時不得結帳。",
+            "ans": "core",
+            "why": "【題目核心】取消行為與空車保護皆為必測地雷。"
+          },
+          {
+            "id": "ol_t6",
+            "text": "至少使用三個清單（商品名稱、購買數量、商品小計）對應同一筆資料，並使用迴圈逐筆讀取加總。優惠依整筆金額分四區間（300七折+鮮奶、200八折+礦泉水、100九折、未滿100原價），先加總再套用折扣，最後只對整筆實付金額四捨五入 1 次；贈品不計入總份數與金額，無贈品顯示「無贈品」；須測恰好 100、200、300 元。",
+            "ans": "core",
+            "why": "【題目核心】三清單＋迴圈、四區間公式、只四捨五入 1 次與邊界值測試皆為核心。"
+          },
+          {
+            "id": "ol_t7",
+            "text": "結帳明細超出畫面時，可使用自動分頁或輪播完整呈現，並搭配清楚的操作提示與目前指向標示，讓使用者無需鍵盤滑鼠即可順暢查看。",
+            "ans": "bonus",
+            "why": "【加分項／體驗亮點】把超長清單自動輪播與視覺引導做好，在介面體驗上能大幅加分。"
+          }
+        ]
+      }
+    ],
+    "docReq": "1. 無接觸購物與三種操作分工。<br>2. 角色、變數、清單、自訂積木及廣播名稱與用途（未使用須註明「未使用」）。<br>3. 以流程圖、虛擬碼或文字說明購物流程。"
+  },
+  {
+    "id": "off_jhs",
+    "cat": "official",
+    "code": "示範3",
+    "short": "國中智慧官方：AI 閱讀小顧問",
+    "groupHtml": "□國小動畫 AI 互動組 &nbsp;□國小遊戲 AI 互動組<br>□國中生活 AI 互動組 &nbsp;<strong>■國中 AI 智慧生活組</strong>",
+    "title": "AI 閱讀探索小顧問",
+    "trapSummary": "必建背景類、2 秒防重複、清單不得刪除較早紀錄、兩層推薦（未出現=0 與並列全推）、無紀錄保護、必交 JSON 檔。",
+    "context": [
+      {
+        "id": "os_c1",
+        "text": "學校希望鼓勵學生接觸不同領域的書籍。有些學生過去閱讀的類別很多元，最近卻只看同一類書籍，因此容易錯失其他領域的閱讀樂趣。",
+        "ans": "theme",
+        "why": "【作品主題】校園多元閱讀探索情境，解釋了為何需要同時看「累計」與「近期」分布。"
+      },
+      {
+        "id": "os_c2",
+        "text": "請設計一套「AI 閱讀探索小顧問」，透過書籍圖卡記錄閱讀歷程，分析整體與近期閱讀分布，並推薦下一個值得探索的領域。",
+        "ans": "goal",
+        "why": "【任務目標】引導學生出示圖卡記錄、分析分布並獲得推薦，直接對應說明文件「任務規劃」。"
+      }
+    ],
+    "tasks": [
+      {
+        "heading": "一、模型訓練與穩定記錄",
+        "segs": [
+          {
+            "id": "os_t1",
+            "text": "使用 ML2Scratch 訓練模型：將大會提供的圖卡分為「文學故事、自然科學、歷史文化、藝術創作」四類，另建「無圖卡（背景）」類別。",
+            "ans": "core",
+            "why": "【題目核心】必用 ML2Scratch 且一定要建背景類，否則鏡頭沒卡片也會亂猜。"
+          },
+          {
+            "id": "os_t2",
+            "text": "同一類別須連續辨識成功 2 秒才加入閱讀紀錄清單末端；未滿 2 秒若結果改變須重新計時；圖卡持續出示時只能記錄一次，移開並回到背景後方可再次記錄，須保留登錄順序。",
+            "ans": "core",
+            "why": "【題目核心】2 秒連續確認、改變歸零與移開回背景防重複為評審必測重點。"
+          }
+        ]
+      },
+      {
+        "heading": "二、統計、兩層推薦與繳交",
+        "segs": [
+          {
+            "id": "os_t3",
+            "text": "結束記錄後統計閱讀總數與累計最多類別。「累計」指完整清單各類筆數，「近期」指最後 8 筆中各類筆數（不足 8 筆採全部）；清單可超過 8 筆，不得刪除較早紀錄。先比較四類近期數量（未出現以 0 計），最少者僅一類即推薦；多類並列則僅比較這些並列類別的累計數量，仍並列則全部推薦。",
+            "ans": "core",
+            "why": "【題目核心】不可刪舊紀錄＋兩層推薦演算法與並列處理，少做任何一段都會算錯。"
+          },
+          {
+            "id": "os_t4",
+            "text": "介面須顯示辨識狀態、紀錄、總數、各類累計與近期數量、累計最多類別、推薦類別及推薦原因；無紀錄顯示「請先加入閱讀紀錄」不得推薦；分析後須能繼續新增並重新分析。須以「1 至 8 筆」及「9 筆以上」測試，並繳交 .sb3 作品檔、程式說明文件與模型訓練檔（JSON）。",
+            "ans": "core",
+            "why": "【題目核心】空狀態保護、續記再分析、兩組邊界測試，以及必交 JSON 檔！"
+          },
+          {
+            "id": "os_t5",
+            "text": "參賽者可於介面加入 2 秒辨識進度環、提供「刪除最後一筆／重新辨識」誤判補救鍵，並設計生動的閱讀顧問角色回饋。",
+            "ans": "bonus",
+            "why": "【加分項】實務上能大幅提升穩定度操作體驗與介面回饋分數。"
+          }
+        ]
+      }
+    ],
+    "docReq": "1. 任務規劃：情境、目標、功能操作與關鍵變數、清單、廣播、自訂積木用途。<br>2. AI 應用流程規劃：類別（含背景）、樣本蒐集、穩定判定與防重複、兩層推薦與流程圖。"
+  },
+  {
+    "id": "e01",
+    "cat": "elem",
+    "code": "E01",
+    "short": "垃圾分類大作戰",
+    "groupHtml": "□國小動畫 AI 互動組 &nbsp;<strong>■國小遊戲 AI 互動組</strong><br>□國中生活 AI 互動組 &nbsp;□國中 AI 智慧生活組",
+    "title": "E01｜垃圾分類大作戰",
+    "trapSummary": "基礎暖身題：抓出 9 件垃圾分類正確 ≥6 件、是非題 ≥5 題 80 分過關、「再試一次！」指定文字與重答分數歸零。",
+    "context": [
+      {
+        "id": "e01_c1",
+        "text": "每到星期五下午的打掃時間，四年甲班的垃圾桶總是塞滿沒有分類的寶特瓶、廢紙和衛生紙，讓負責倒垃圾的同學非常困擾，也造成資源浪費。",
+        "ans": "theme",
+        "why": "【作品主題】校園資源回收與垃圾分類情境，美術與題目內容都要扣緊校園回收主題。"
+      },
+      {
+        "id": "e01_c2",
+        "text": "老師決定舉辦一場環保挑戰賽，請玩家扮演環保小隊長，帶領同學在限時前完成教室垃圾分類挑戰，並通過資源回收知識測驗，讓大家養成正確分類的好習慣。",
+        "ans": "goal",
+        "why": "【任務目標】玩家扮演環保小隊長，完成分類挑戰與回收知識測驗（說明文件第 1 題核心）。"
+      }
+    ],
+    "tasks": [
+      {
+        "heading": "1. 教室垃圾分類大挑戰",
+        "segs": [
+          {
+            "id": "e01_t1",
+            "text": "教室地板上散落著各種同學丟棄的物品，需要一一放進正確的分類桶中。",
+            "ans": null,
+            "why": "一般關卡情境鋪陳，尚未出現具體規格數字。"
+          },
+          {
+            "id": "e01_t2",
+            "text": "玩家需判斷每件物品的材質並將其分類至正確的垃圾桶，",
+            "ans": "goal",
+            "why": "【任務目標】第一關引導玩家執行的動作與目標（對應說明文件任務一）。"
+          },
+          {
+            "id": "e01_t3",
+            "text": "場景中至少須出現 9 件垃圾，且須涵蓋一般垃圾、紙類與塑膠類三種分類，當玩家分類正確達 6 件以上時方可進入下一關。",
+            "ans": "core",
+            "why": "【題目核心】必做門檻：至少 9 件、涵蓋 3 類、正確達 6 件以上才過關。"
+          },
+          {
+            "id": "e01_t4",
+            "text": "（例如：喝完的寶特瓶屬於塑膠類、用過的作業紙屬於紙類、擦手衛生紙屬於一般垃圾。）",
+            "ans": null,
+            "why": "素材舉例參考，非強制規定項目。"
+          },
+          {
+            "id": "e01_t5",
+            "text": "若參賽者希望增添趣味，可額外加入 AI 手勢辨識功能，讓玩家以手勢比出 1 至 3 號或左右揮手選擇分類桶，完成此互動可獲額外加分，惟本項非必要任務。",
+            "ans": "bonus",
+            "why": "【加分項】明確標示非必要但有加分的 AI 手勢互動。"
+          }
+        ]
+      },
+      {
+        "heading": "2. 回收知識小測驗",
+        "segs": [
+          {
+            "id": "e01_t6",
+            "text": "順利整理完教室後，接下來要考驗小隊長對日常回收規則的了解程度。",
+            "ans": null,
+            "why": "過場銜接語句。"
+          },
+          {
+            "id": "e01_t7",
+            "text": "系統須設計至少 5 題資源回收是非題，滿分 100 分，達 80 分以上即可過關；若未達 80 分則畫面須顯示「再試一次！」並提供重新答題功能，重新答題時分數須歸零重新計算。",
+            "ans": "core",
+            "why": "【題目核心】≥5 題、滿分 100、80 分過關、指定文字「再試一次！」與重答分數歸零，缺一不可。"
+          }
+        ]
+      }
+    ],
+    "docReq": "1. 玩家在這個遊戲的目標是？<br>2. 這個遊戲的規則條件及玩家任務挑戰（任務一/規則一、任務二/規則二、自行增加任務/規則）。"
+  },
+  {
+    "id": "e02",
+    "cat": "elem",
+    "code": "E02",
+    "short": "地震來了！避難小英雄",
+    "groupHtml": "□國小動畫 AI 互動組 &nbsp;<strong>■國小遊戲 AI 互動組</strong><br>□國中生活 AI 互動組 &nbsp;□國中 AI 智慧生活組",
+    "title": "E02｜地震來了！校園避難小英雄",
+    "trapSummary": "三關完整規格：第一關「趴下、掩護、穩住」三步驟缺一不可、第二關 ≥6 物件找 ≥3 安全點、第三關 5 題選擇題答對 4 題與指定文字「防災知識要加強！」。",
+    "context": [
+      {
+        "id": "e02_c1",
+        "text": "花蓮位處地震帶，平常在校園上課時隨時可能遇到突如其來的搖晃。如果同學在地震當下驚慌亂跑或躲在錯誤的地方，很容易被掉落的物品砸傷。",
+        "ans": "theme",
+        "why": "【作品主題】花蓮校園地震防災演練，背景、道具與測驗都要扣緊地震避難主題。"
+      },
+      {
+        "id": "e02_c2",
+        "text": "請玩家化身為校園防災小英雄，在地震警報響起時引導同學完成正確避難動作、找出教室裡的安全避難位置，並通過防災知識考驗。",
+        "ans": "goal",
+        "why": "【任務目標】玩家總目標：完成避難動作、找安全點與通過防災考驗（寫進說明文件第 1 題）。"
+      }
+    ],
+    "tasks": [
+      {
+        "heading": "1. 保命三步驟與教室安全搜尋",
+        "segs": [
+          {
+            "id": "e02_t1",
+            "text": "地震警報大作，教室開始劇烈搖晃，同學們必須立刻做出反應以免受傷。",
+            "ans": null,
+            "why": "情境氣氛鋪陳。"
+          },
+          {
+            "id": "e02_t2",
+            "text": "第一關須引導玩家依序完成「趴下、掩護、穩住」三步驟互動，三項動作皆完成方可過關。",
+            "ans": "core",
+            "why": "【題目核心】必須三步驟都做出互動且全部完成才能進下一關。"
+          },
+          {
+            "id": "e02_t3",
+            "text": "參賽者可於此關自行加入 AI 臉部或手部辨識，讓玩家對鏡頭做出指定手勢確認「穩住」動作，完成辨識可獲額外加分，本功能非必要項目。",
+            "ans": "bonus",
+            "why": "【加分項】AI 鏡頭辨識屬於非必要加分亮點。"
+          },
+          {
+            "id": "e02_t4",
+            "text": "第二關進入教室俯視或實景畫面，玩家須判斷哪些地方相對安全、哪些地方有掉落風險。",
+            "ans": "goal",
+            "why": "【任務目標】第二關玩家任務：分辨教室內的安全與危險位置。"
+          },
+          {
+            "id": "e02_t5",
+            "text": "教室場景至少須放置 6 個物件或位置（包含書櫃旁、窗戶邊等危險點與堅固桌下等安全點），玩家須成功找出至少 3 個安全避難點才算過關。",
+            "ans": "core",
+            "why": "【題目核心】至少 6 個物件、找出至少 3 個安全點才過關。"
+          }
+        ]
+      },
+      {
+        "heading": "2. 防災小英雄考驗",
+        "segs": [
+          {
+            "id": "e02_t6",
+            "text": "搖晃停止後，疏散到操場前還有一場觀念檢核。",
+            "ans": null,
+            "why": "過場敘述。"
+          },
+          {
+            "id": "e02_t7",
+            "text": "第三關須設計至少 5 題地震防災選擇題，答對 4 題以上即可過關；未達標準須顯示「防災知識要加強！」並提供重新答題功能。",
+            "ans": "core",
+            "why": "【題目核心】≥5 題「選擇題」（注意不是是非題！）、答對 4 題以上、指定文字「防災知識要加強！」並可重答。"
+          }
+        ]
+      }
+    ],
+    "docReq": "1. 玩家在這個遊戲的目標是？<br>2. 這個遊戲的規則條件及玩家任務挑戰。"
+  },
+  {
+    "id": "e03",
+    "cat": "elem",
+    "code": "E03",
+    "short": "交通安全小尖兵",
+    "groupHtml": "□國小動畫 AI 互動組 &nbsp;<strong>■國小遊戲 AI 互動組</strong><br>□國中生活 AI 互動組 &nbsp;□國中 AI 智慧生活組",
+    "title": "E03｜交通安全小尖兵",
+    "trapSummary": "注意第二關紅燈移動須顯示「紅燈停！」並退回起點，第三關過關分數是「70 分」（不是常見的 80 分！）。",
+    "context": [
+      {
+        "id": "e03_c1",
+        "text": "每天上下學時段校門口車水馬龍，偶爾會看到同學為了趕時間直接闖紅燈、邊走路邊低頭滑手機，或是沒注意轉彎車輛就衝上斑馬線，非常危險。",
+        "ans": "theme",
+        "why": "【作品主題】上下學馬路交通安全情境。"
+      },
+      {
+        "id": "e03_c2",
+        "text": "為了守護大家的安全，玩家將擔任導護小尖兵，負責在街景中抓出危險用路行為、安全護送學弟妹通過馬路，並完成交通規則測驗。",
+        "ans": "goal",
+        "why": "【任務目標】抓出危險行為、護送過馬路、完成測驗（說明文件第 1 題）。"
+      }
+    ],
+    "tasks": [
+      {
+        "heading": "1. 抓出馬路危險行為與安全過街",
+        "segs": [
+          {
+            "id": "e03_t1",
+            "text": "放學鐘聲響起，路口擠滿了行人和車輛，處處暗藏危機。",
+            "ans": null,
+            "why": "背景敘述。"
+          },
+          {
+            "id": "e03_t2",
+            "text": "第一關街景中至少須放置 6 個路人或車輛行為，玩家須找出至少 3 個危險行為才能進入下一關。",
+            "ans": "core",
+            "why": "【題目核心】至少 6 個行為、找對至少 3 個危險行為才進下一關。"
+          },
+          {
+            "id": "e03_t3",
+            "text": "第二關玩家須護送主角走過斑馬線，紅綠燈會定時切換；主角僅能在綠燈時前進，若在紅燈時移動須立即判定失敗、顯示「紅燈停！」並將主角退回起點重新出發。",
+            "ans": "core",
+            "why": "【題目核心】紅綠燈切換、紅燈移動要顯示「紅燈停！」且退回起點！"
+          },
+          {
+            "id": "e03_t4",
+            "text": "若時間充裕，參賽者可加入 AI 臉部左右轉頭偵測，模擬過馬路前「左看、右看、再左看」確認來車的動作，此為額外加分功能而非必要任務。",
+            "ans": "bonus",
+            "why": "【加分項】臉部左右轉頭偵測為非必要加分項。"
+          }
+        ]
+      },
+      {
+        "heading": "2. 交通規則測驗",
+        "segs": [
+          {
+            "id": "e03_t5",
+            "text": "最後一關須完成至少 5 題交通安全問答，滿分 100 分，達 70 分以上即可過關；未達 70 分則須提供重新測驗功能讓玩家再次挑戰。",
+            "ans": "core",
+            "why": "【題目核心】注意這題門檻是 70 分（不要憑習慣寫成 80 分！），且未達須能重測。"
+          }
+        ]
+      }
+    ],
+    "docReq": "1. 玩家在這個遊戲的目標是？<br>2. 這個遊戲的規則條件及玩家任務挑戰。"
+  },
+  {
+    "id": "e04",
+    "cat": "elem",
+    "code": "E04",
+    "short": "小小營養師（暗藏雙重限制）",
+    "groupHtml": "□國小動畫 AI 互動組 &nbsp;<strong>■國小遊戲 AI 互動組</strong><br>□國中生活 AI 互動組 &nbsp;□國中 AI 智慧生活組",
+    "title": "E04｜小小營養師！打造均衡午餐",
+    "trapSummary": "🕵️ 暗藏陷阱：湊齊 4 大類食物還不夠！文字裡藏了「同食物不超過 2 次」、「總熱量不得超過 800 大卡」以及「不可選含糖飲料」三個隱藏限制！",
+    "context": [
+      {
+        "id": "e04_c1",
+        "text": "小華平常吃午餐非常挑食，常常只夾炸雞腿和珍珠奶茶，完全不碰青菜和水果，導致下午上課沒精神，健康檢查時也被護理師阿姨提醒飲食不均衡且熱量偏高。",
+        "ans": "theme",
+        "why": "【作品主題】校園午餐挑食與均衡健康飲食（含熱量與少糖觀念）。"
+      },
+      {
+        "id": "e04_c2",
+        "text": "玩家將扮演小小營養師，幫小華從自助餐菜色中搭配出一份營養均衡又健康的午餐餐盤，並通過飲食知識小測驗。",
+        "ans": "goal",
+        "why": "【任務目標】幫小華搭配均衡健康餐盤並通過飲食測驗。"
+      }
+    ],
+    "tasks": [
+      {
+        "heading": "1. 打造健康餐盤",
+        "segs": [
+          {
+            "id": "e04_t1",
+            "text": "餐廳檯面上擺滿了色香味俱全的菜色與飲品，讓小華看得眼花撩亂。",
+            "ans": null,
+            "why": "情境過渡句。"
+          },
+          {
+            "id": "e04_t2",
+            "text": "菜單中至少須提供 8 種食物選項（並標示各自熱量），玩家須為餐盤選出包含全穀雜糧、蛋白質、蔬菜與水果四類各至少 1 樣。",
+            "ans": "core",
+            "why": "【題目核心】≥8 種食物（含熱量）、4 類各至少 1 樣。"
+          },
+          {
+            "id": "e04_t3",
+            "text": "為避免偏食與攝取過量，同一種食物不得重複選取超過 2 次；此外，整份餐盤的總熱量不得超過 800 大卡，且餐盤中不可選入任何「含糖飲料」，若違反任一條件皆視為不均衡，系統須明確提示缺少類別或違規原因且不得過關。",
+            "ans": "core",
+            "why": "【題目核心｜🕵️ 暗藏陷阱！】三條藏在段落裡的硬限制：① 同食物 ≤2 次 ② 總熱量 ≤800 ③ 不可選含糖飲料，且不符要提示原因並阻擋過關！"
+          },
+          {
+            "id": "e04_t4",
+            "text": "參賽者可自行加入 AI 臉部表情或手勢辨識（例如對鏡頭比讚確認送出餐盤），完成辨識可獲額外加分，本功能非必要項目。",
+            "ans": "bonus",
+            "why": "【加分項】比讚送出餐盤是非必要加分功能。"
+          }
+        ]
+      },
+      {
+        "heading": "2. 飲食知識是非題",
+        "segs": [
+          {
+            "id": "e04_t5",
+            "text": "餐盤審核通過後，玩家須回答至少 5 題均衡飲食是非題，滿分 100 分，80 分以上過關；未達 80 分顯示「再接再厲！」並提供重新答題功能。",
+            "ans": "core",
+            "why": "【題目核心】≥5 題是非題、80 分過關、「再接再厲！」與重答。"
+          }
+        ]
+      }
+    ],
+    "docReq": "1. 玩家在這個遊戲的目標是？<br>2. 這個遊戲的規則條件及玩家任務挑戰。"
+  },
+  {
+    "id": "e05",
+    "cat": "elem",
+    "code": "E05",
+    "short": "守護花蓮海洋（雙失敗出口）",
+    "groupHtml": "□國小動畫 AI 互動組 &nbsp;<strong>■國小遊戲 AI 互動組</strong><br>□國中生活 AI 互動組 &nbsp;□國中 AI 智慧生活組",
+    "title": "E05｜守護花蓮海洋！淨灘大行動",
+    "trapSummary": "🕵️ 暗藏陷阱：有「雙重失敗出口」（時間歸零未達標 OR 愛心歸零），且重玩時時間、分數、愛心與場上物件都必須完全重設！",
+    "context": [
+      {
+        "id": "e05_c1",
+        "text": "週末大家來到花蓮七星潭海邊，卻發現沙灘上被海浪沖上來許多廢棄漁網、吸管和寶特瓶，不只破壞美景，還威脅到誤食垃圾的海龜與寄居蟹。",
+        "ans": "theme",
+        "why": "【作品主題】花蓮海洋保育與七星潭淨灘行動。"
+      },
+      {
+        "id": "e05_c2",
+        "text": "玩家將加入海洋淨灘志工隊，在限時內清理沙灘上的海廢垃圾、小心避開海洋生物，並在任務後完成海洋保育小知識問答。",
+        "ans": "goal",
+        "why": "【任務目標】限時淨灘、避開海洋生物、完成保育問答。"
+      }
+    ],
+    "tasks": [
+      {
+        "heading": "1. 限時七星潭淨灘",
+        "segs": [
+          {
+            "id": "e05_t1",
+            "text": "漲潮前沙灘上同時散落著塑膠垃圾與正在爬行的海洋小生物，玩家必須眼明手快。",
+            "ans": null,
+            "why": "關卡情境說明。"
+          },
+          {
+            "id": "e05_t2",
+            "text": "玩家須在限時 60 秒內成功清理至少 10 件海洋垃圾才可過關。過程中若誤點海龜或螃蟹等海洋生物，每次須扣除 1 顆愛心（初始共 3 顆愛心）；無論是愛心歸零或是 60 秒時間到仍未清理滿 10 件，皆須判定為挑戰失敗、顯示「挑戰失敗」並提供重新開始功能，重新開始時時間、已清理件數與愛心數皆須完整重設。",
+            "ans": "core",
+            "why": "【題目核心｜🕵️ 暗藏陷阱！】60 秒清理 ≥10 件＋誤點扣愛心＋雙重失敗條件（愛心=0 或 時間=0）＋重玩全部數值歸零重設！"
+          },
+          {
+            "id": "e05_t3",
+            "text": "為了讓操作更具臨場感，參賽者可自行加入 AI 手部追蹤（Handpose），讓玩家以手掌移動淨灘夾子撿拾垃圾，此功能為額外加分項而非必要規定。",
+            "ans": "bonus",
+            "why": "【加分項】Handpose 控制淨灘夾子屬於加分亮點。"
+          }
+        ]
+      },
+      {
+        "heading": "2. 海洋保育問答",
+        "segs": [
+          {
+            "id": "e05_t4",
+            "text": "淨灘成功後進入海洋教室，玩家須完成至少 4 題海洋保育是非題，答對 3 題以上即獲頒「海洋守護者」稱號；未達標須提供重答機會。",
+            "ans": "core",
+            "why": "【題目核心】≥4 題是非題、答對 ≥3 題顯示「海洋守護者」、未達可重答。"
+          }
+        ]
+      }
+    ],
+    "docReq": "1. 玩家在這個遊戲的目標是？<br>2. 這個遊戲的規則條件及玩家任務挑戰。"
+  },
+  {
+    "id": "e06",
+    "cat": "elem",
+    "code": "E06",
+    "short": "節電特攻隊（反向不可全關）",
+    "groupHtml": "□國小動畫 AI 互動組 &nbsp;<strong>■國小遊戲 AI 互動組</strong><br>□國中生活 AI 互動組 &nbsp;□國中 AI 智慧生活組",
+    "title": "E06｜節電特攻隊！抓出吃電怪獸",
+    "trapSummary": "🕵️ 暗藏陷阱：場景裡混入了 2 個「絕對不能關」的必要電器（如冰箱、魚缸打氣機）！不能把所有電器都寫成點擊就關閉，誤關須扣分並自動恢復開啟！",
+    "context": [
+      {
+        "id": "e06_c1",
+        "text": "暑假還沒過完，家裡的電費帳單就暴增了一大截，原來是因為大家常常離開房間沒關冷氣和電燈，卻也有一些為了保存食物或養魚而不能隨便斷電的電器。",
+        "ans": "theme",
+        "why": "【作品主題】居家節電減碳，同時區分「浪費電」與「必要用電」。"
+      },
+      {
+        "id": "e06_c2",
+        "text": "玩家將組成節電特攻隊，巡查家中各個房間，把浪費電的吃電怪獸通通關掉、保護必要電器不斷電，並通過節電知識測驗。",
+        "ans": "goal",
+        "why": "【任務目標】巡查房間關掉浪費電器、保護必要電器、完成測驗。"
+      }
+    ],
+    "tasks": [
+      {
+        "heading": "1. 家中房間巡查任務",
+        "segs": [
+          {
+            "id": "e06_t1",
+            "text": "客廳和臥室裡同時運轉著各種家電，玩家要仔細觀察哪些正在白白浪費電。",
+            "ans": null,
+            "why": "場景過渡描述。"
+          },
+          {
+            "id": "e06_t2",
+            "text": "遊戲至少須設計 2 個房間場景（如客廳、臥室），合計放置至少 6 個浪費電的電器行為（如無人看電視、沒拔插頭的待機電器）以及 2 個不可關閉的必要電器（如冰箱、魚缸打氣機）。",
+            "ans": "core",
+            "why": "【題目核心｜🕵️ 暗藏陷阱！】除了 2 房間 ≥6 個浪費電器，還特別埋了 2 個不可關閉的必要電器！"
+          },
+          {
+            "id": "e06_t3",
+            "text": "玩家須將 6 個浪費電器全部關閉才能進入下一關，且畫面須即時顯示「剩餘未關閉數量」；若玩家誤關必要電器，系統須立即扣分、顯示「這個不能關！」並將該電器自動恢復為開啟狀態。",
+            "ans": "core",
+            "why": "【題目核心｜🕵️ 暗藏陷阱！】誤關必要電器要扣分＋顯示「這個不能關！」＋自動恢復開啟！"
+          },
+          {
+            "id": "e06_t4",
+            "text": "參賽者可自行加入 AI 手勢辨識（例如握拳或揮手動作）來關閉電器開關，完成辨識可獲額外加分，非必要任務。",
+            "ans": "bonus",
+            "why": "【加分項】AI 手勢關電器為非必要加分項。"
+          }
+        ]
+      },
+      {
+        "heading": "2. 節電知識大考驗",
+        "segs": [
+          {
+            "id": "e06_t5",
+            "text": "巡查完成後，玩家須回答至少 5 題生活節電是非題，滿分 100 分，80 分以上過關；未達 80 分須顯示「電費還太高喔！」並提供重新答題功能。",
+            "ans": "core",
+            "why": "【題目核心】≥5 題、80 分過關、指定文字「電費還太高喔！」與重答。"
+          }
+        ]
+      }
+    ],
+    "docReq": "1. 玩家在這個遊戲的目標是？<br>2. 這個遊戲的規則條件及玩家任務挑戰。"
+  },
+  {
+    "id": "e07",
+    "cat": "elem",
+    "code": "E07",
+    "short": "反霸凌守護者（初始 50 分陷阱）",
+    "groupHtml": "□國小動畫 AI 互動組 &nbsp;<strong>■國小遊戲 AI 互動組</strong><br>□國中生活 AI 互動組 &nbsp;□國中 AI 智慧生活組",
+    "title": "E07｜反霸凌！友善校園守護者",
+    "trapSummary": "🕵️ 暗藏陷阱：① 初始友善值是「50 分」不是 0 分（重玩也要回到 50 分！）；② 選錯是「扣分並顯示原因，但繼續下一關」，不是卡在原關！",
+    "context": [
+      {
+        "id": "e07_c1",
+        "text": "班上最近在群組裡出現拿同學照片開玩笑、故意不讓某位同學分組的情況，讓被排擠的同學每天都不敢來學校上課。",
+        "ans": "theme",
+        "why": "【作品主題】校園反霸凌、同理心與正向求助管道。"
+      },
+      {
+        "id": "e07_c2",
+        "text": "玩家將扮演友善校園守護者，面對一連串校園人際衝突情境時做出正確判斷，累積友善值來化解衝突並建立溫暖的班級氣氛。",
+        "ans": "goal",
+        "why": "【任務目標】面對衝突情境做出友善選擇、累積友善值化解衝突。"
+      }
+    ],
+    "tasks": [
+      {
+        "heading": "1. 校園衝突情境抉擇",
+        "segs": [
+          {
+            "id": "e07_t1",
+            "text": "遊戲將透過對話與互動畫面呈現同學間的衝突事件，考驗玩家的應對方式。",
+            "ans": null,
+            "why": "呈現方式描述。"
+          },
+          {
+            "id": "e07_t2",
+            "text": "遊戲須設計至少 3 個校園衝突情境關卡，每關皆須提供至少 3 個不同做法的選項（例如主動關心與求助師長、冷漠旁觀、跟著嘲笑）。",
+            "ans": "core",
+            "why": "【題目核心】≥3 個情境關卡、每關 ≥3 個選項。"
+          },
+          {
+            "id": "e07_t3",
+            "text": "班級的初始友善值設定為 50 分，玩家選擇友善做法可加分、選擇不當做法則扣分並顯示原因說明；無論該關選對或選錯皆不中斷流程，玩家仍可繼續進入下一關，待全部關卡結束後若友善值達 80 分以上即解鎖圓滿結局。",
+            "ans": "core",
+            "why": "【題目核心｜🕵️ 暗藏陷阱！】初始分數是 50 分（不是 0！），且選錯要扣分＋顯示原因但「繼續下一關」不卡關！"
+          },
+          {
+            "id": "e07_t4",
+            "text": "若結束時友善值未達 80 分，畫面須顯示「換個方式試試看！」並提供重新挑戰功能，重新挑戰時友善值須重設回初始的 50 分。",
+            "ans": "core",
+            "why": "【題目核心｜🕵️ 暗藏陷阱！】指定文字「換個方式試試看！」且重玩須回到 50 分！"
+          },
+          {
+            "id": "e07_t5",
+            "text": "參賽者可自行加入 AI 臉部表情偵測（例如微笑鼓勵受委屈的同學），作為劇情中的額外加分互動，非必要任務。",
+            "ans": "bonus",
+            "why": "【加分項】AI 表情偵測為額外加分功能。"
+          }
+        ]
+      }
+    ],
+    "docReq": "1. 玩家在這個遊戲的目標是？<br>2. 這個遊戲的規則條件及玩家任務挑戰。"
+  },
+  {
+    "id": "e08",
+    "cat": "elem",
+    "code": "E08",
+    "short": "圖書館尋寶記（防重複＋逐題解析）",
+    "groupHtml": "□國小動畫 AI 互動組 &nbsp;<strong>■國小遊戲 AI 互動組</strong><br>□國中生活 AI 互動組 &nbsp;□國中 AI 智慧生活組",
+    "title": "E08｜圖書館尋寶記！分類號大挑戰",
+    "trapSummary": "🕵️ 暗藏陷阱：① 已上架的書不可被重複點擊加分；② 第二關是非題每題答完須先顯示解析，點「下一題」才切換，不可答完瞬間跳題！",
+    "context": [
+      {
+        "id": "e08_c1",
+        "text": "下課十分鐘是學校圖書館的還書高峰期，推車上堆滿了文學、科學和歷史等各類書籍，如果沒有照分類放回正確書架，下一位想借書的同學就找不到了。",
+        "ans": "theme",
+        "why": "【作品主題】校園圖書館書籍分類與借閱禮儀。"
+      },
+      {
+        "id": "e08_c2",
+        "text": "玩家將擔任小小圖書管理員，把推車上的書本一一放到對應書架歸位，並通過圖書館禮儀考驗。",
+        "ans": "goal",
+        "why": "【任務目標】將書本正確上架歸位並通過借閱禮儀考驗。"
+      }
+    ],
+    "tasks": [
+      {
+        "heading": "1. 書本分類上架挑戰",
+        "segs": [
+          {
+            "id": "e08_t1",
+            "text": "推車上有許多封面與書名各異的藏書，需要管理員細心辨識。",
+            "ans": null,
+            "why": "一般描述。"
+          },
+          {
+            "id": "e08_t2",
+            "text": "第一關至少須準備 6 本不同主題書籍，並設置文學、科學與歷史 3 個對應書架；玩家將書放對書架即可上架，但已成功上架的書本不可被重複點擊而重複計數或加分。",
+            "ans": "core",
+            "why": "【題目核心｜🕵️ 暗藏陷阱！】≥6 本書分 3 類書架，且「已上架不可重複點擊加分」！"
+          },
+          {
+            "id": "e08_t3",
+            "text": "若放錯書架則扣除 1 次失誤機會（共 3 次機會），機會歸零須顯示挑戰失敗並重新開始；將全部 6 本書正確上架後始可進入下一關。",
+            "ans": "core",
+            "why": "【題目核心】3 次失誤機會歸零重來、6 本全上架才進下一關。"
+          },
+          {
+            "id": "e08_t4",
+            "text": "參賽者可額外加入 AI 手勢辨識，讓玩家比出數字 1、2、3 直接選擇書架上架，完成可獲加分，本項非必要。",
+            "ans": "bonus",
+            "why": "【加分項】手勢比數字選書架為額外加分項。"
+          }
+        ]
+      },
+      {
+        "heading": "2. 借閱禮儀大考驗",
+        "segs": [
+          {
+            "id": "e08_t5",
+            "text": "第二關須設計至少 5 題圖書館禮儀是非題，滿分 100 分、80 分以上過關；每次作答後系統須先停留在畫面顯示該題正確解析，待玩家點擊「下一題」按鈕後才切換題目，不得直接跳題；未達 80 分須顯示「再接再厲！」並提供重新答題功能。",
+            "ans": "core",
+            "why": "【題目核心｜🕵️ 暗藏陷阱！】除了 ≥5 題、80 分、「再接再厲！」重答外，還規定「每題作答後須停下來顯示解析，點下一題才切換」！"
+          }
+        ]
+      }
+    ],
+    "docReq": "1. 玩家在這個遊戲的目標是？<br>2. 這個遊戲的規則條件及玩家任務挑戰。"
+  },
+  {
+    "id": "e09",
+    "cat": "elem",
+    "code": "E09",
+    "short": "登革熱防治（順序相依陷阱）",
+    "groupHtml": "□國小動畫 AI 互動組 &nbsp;<strong>■國小遊戲 AI 互動組</strong><br>□國中生活 AI 互動組 &nbsp;□國中 AI 智慧生活組",
+    "title": "E09｜登革熱防治！清除積水容器",
+    "trapSummary": "🕵️ 暗藏陷阱：操作順序相依！每個積水容器必須先「倒水」再「刷洗」，未倒水直接刷洗須判定無效並顯示「請先倒掉積水！」！",
+    "context": [
+      {
+        "id": "e09_c1",
+        "text": "連續幾天的梅雨讓校園花圃和角落的廢棄花盆、水桶積滿了雨水，這些積水容器正是病媒蚊產卵的溫床，如果不及早清除，全校師生都可能面臨登革熱威脅。",
+        "ans": "theme",
+        "why": "【作品主題】校園登革熱防治與「巡、倒、清、刷」衛生教育。"
+      },
+      {
+        "id": "e09_c2",
+        "text": "請玩家化身校園防疫小尖兵，在校園角落巡查積水容器，依照正確的「巡、倒、清、刷」步驟徹底清除孳生源，並通過防治測驗。",
+        "ans": "goal",
+        "why": "【任務目標】巡查並依正確步驟清除積水容器，完成防治測驗。"
+      }
+    ],
+    "tasks": [
+      {
+        "heading": "1. 校園積水清除行動",
+        "segs": [
+          {
+            "id": "e09_t1",
+            "text": "雨後的校園草叢與走廊擺著各式各樣的容器，有些乾燥無水，有些已經積水甚至出現孑孓。",
+            "ans": null,
+            "why": "場景描述。"
+          },
+          {
+            "id": "e09_t2",
+            "text": "校園場景至少須放置 8 個物件，其中至少包含 4 個積水容器，玩家須找出所有積水容器並逐一清除。",
+            "ans": "core",
+            "why": "【題目核心】≥8 物件、找出並清除 ≥4 個積水容器。"
+          },
+          {
+            "id": "e09_t3",
+            "text": "每個積水容器須依序完成「先倒水、再刷洗」兩道步驟且外觀隨步驟變化，方視為徹底清除；若玩家尚未倒水就直接對容器使用刷子刷洗，系統須判定無效並顯示「請先倒掉積水！」提醒，且不得累計完成數。",
+            "ans": "core",
+            "why": "【題目核心｜🕵️ 暗藏陷阱！】順序相依！必須記錄每個容器是否已倒水，未倒水先刷要擋下並顯示指定文字！"
+          },
+          {
+            "id": "e09_t4",
+            "text": "參賽者可自行加入 AI 手部移動動作偵測，模擬手持容器倒水或左右刷洗的互動效果，完成可獲額外加分，非必要任務。",
+            "ans": "bonus",
+            "why": "【加分項】AI 手部動作模擬倒水／刷洗為加分項。"
+          }
+        ]
+      },
+      {
+        "heading": "2. 防疫衛教測驗",
+        "segs": [
+          {
+            "id": "e09_t5",
+            "text": "清除完畢後進入衛教測驗，須包含至少 5 題登革熱防治問題，答對 4 題以上即過關；未達標準須顯示「還有蚊子危機！」並提供重新測驗功能。",
+            "ans": "core",
+            "why": "【題目核心】≥5 題、答對 ≥4 題、指定文字「還有蚊子危機！」並可重測。"
+          }
+        ]
+      }
+    ],
+    "docReq": "1. 玩家在這個遊戲的目標是？<br>2. 這個遊戲的規則條件及玩家任務挑戰。"
+  },
+  {
+    "id": "e10",
+    "cat": "elem",
+    "code": "E10",
+    "short": "密碼大冒險（情境跨段黑名單）",
+    "groupHtml": "□國小動畫 AI 互動組 &nbsp;<strong>■國小遊戲 AI 互動組</strong><br>□國中生活 AI 互動組 &nbsp;□國中 AI 智慧生活組",
+    "title": "E10｜密碼大冒險！拯救被盜的遊戲帳號",
+    "trapSummary": "🕵️ 暗藏陷阱：小傑生日「0520」藏在第一段「情境說明」裡，在第二關變成密碼黑名單條件（不得含 0520 或 1234）！此外滿分 100 還有額外「資安大師」稱號！",
+    "context": [
+      {
+        "id": "e10_c1",
+        "text": "今年剛過完 5 月 20 日生日的小傑非常喜歡玩線上遊戲，但他為了好記，把帳號密碼設成跟生日有關的簡單數字，昨天又不小心點了假冒官方送免費點數的彈窗連結，結果遊戲帳號瞬間被盜走。",
+        "ans": "theme",
+        "why": "【作品主題｜🕵️ 藏有線索！】遊戲帳號防盜與密碼安全；注意裡面藏了小傑的生日「5 月 20 日（0520）」！"
+      },
+      {
+        "id": "e10_c2",
+        "text": "玩家將協助小傑辨識釣魚詐騙訊息、重新設定一組高強度安全密碼，並通過資安大考驗，成功奪回帳號控制權。",
+        "ans": "goal",
+        "why": "【任務目標】辨識釣魚訊息、設定高強度密碼、通過資安考驗。"
+      }
+    ],
+    "tasks": [
+      {
+        "heading": "1. 識破釣魚連結與重設強密碼",
+        "segs": [
+          {
+            "id": "e10_t1",
+            "text": "小傑的信箱與遊戲聊天室跳出一堆真假難辨的通知視窗。",
+            "ans": null,
+            "why": "情境過渡句。"
+          },
+          {
+            "id": "e10_t2",
+            "text": "第一關須呈現至少 6 則彈窗或訊息，玩家須找出至少 3 則釣魚詐騙訊息始可進入下一關。",
+            "ans": "core",
+            "why": "【題目核心】≥6 則訊息、找出 ≥3 則釣魚詐騙訊息。"
+          },
+          {
+            "id": "e10_t3",
+            "text": "第二關須由玩家為小傑輸入或組合新密碼，系統須同時檢查三項規則：密碼長度至少 8 個字元、同時包含英文字母與數字、且不得包含小傑的生日數字「0520」或連號「1234」；任一條件不符皆須明確提示未達標原因且不得過關。",
+            "ans": "core",
+            "why": "【題目核心｜🕵️ 暗藏陷阱！】三條件同時檢查：長度≥8、含英數、禁用「0520」與「1234」，缺一不可且要提示哪裡不符！"
+          },
+          {
+            "id": "e10_t4",
+            "text": "備註：參賽者可自行加入 AI 手部或臉部身分辨識作為「雙重驗證」關卡，完成可獲額外加分，本功能非必要任務。",
+            "ans": "bonus",
+            "why": "【加分項】AI 雙重驗證為非必要加分項。"
+          }
+        ]
+      },
+      {
+        "heading": "2. 資安大考驗",
+        "segs": [
+          {
+            "id": "e10_t5",
+            "text": "第三關須完成至少 5 題網路與帳號安全測驗，滿分 100 分，80 分以上即可過關（若達滿分 100 分須額外顯示「資安大師」稱號）；未達 80 分則顯示「再接再厲！」並提供重新答題功能。",
+            "ans": "core",
+            "why": "【題目核心】≥5 題、80 分過關、滿分 100 額外顯示「資安大師」、未達「再接再厲！」並可重答。"
+          }
+        ]
+      }
+    ],
+    "docReq": "1. 玩家在這個遊戲的目標是？<br>2. 這個遊戲的規則條件及玩家任務挑戰。"
+  },
+  {
+    "id": "j01",
+    "cat": "jh",
+    "code": "J01",
+    "short": "生活組：無接觸點餐機（特例不折抵）",
+    "groupHtml": "□國小動畫 AI 互動組 &nbsp;□國小遊戲 AI 互動組<br><strong>■國中生活 AI 互動組</strong> &nbsp;□國中 AI 智慧生活組",
+    "title": "J01｜AI 無接觸校園點餐機",
+    "trapSummary": "🕵️ 暗藏陷阱：特價飲品「鮮奶」不列入滿額 150/250 折抵門檻計算，但仍須計入總份數與實付金額！迴圈加總時要拆開算！",
+    "context": [
+      {
+        "id": "j01_c1",
+        "text": "每到下課時間，學校合作社熱食部總是擠滿買飯糰、三明治和飲料的同學，為了減少排隊接觸與加快點餐速度，學校打算試辦無接觸自助點餐機。",
+        "ans": "theme",
+        "why": "【作品主題】校園合作社熱食部無接觸自助點餐情境。"
+      },
+      {
+        "id": "j01_c2",
+        "text": "請設計一套無接觸點餐系統，引導學生全程以臉部選擇餐點、手指姿勢決定份數，並以捏合手勢完成點餐與優惠結算。",
+        "ans": "goal",
+        "why": "【任務目標】引導使用者以三種無接觸操作完成選餐、確認清單與結算優惠。"
+      }
+    ],
+    "tasks": [
+      {
+        "heading": "一、無接觸操作與防誤觸規格",
+        "segs": [
+          {
+            "id": "j01_t1",
+            "text": "系統提供主餐（飯糰 35 元、三明治 45 元）與飲品（豆漿 25 元、特價鮮奶 30 元），採單人操作。",
+            "ans": null,
+            "why": "商品清單設定（注意鮮奶標註了「特價」，後面有伏筆！）。"
+          },
+          {
+            "id": "j01_t2",
+            "text": "須使用 Facemesh2Scratch 與 Handpose2Scratch；除點擊綠旗啟動或重新開始外，點餐至結帳過程不得使用鍵盤或滑鼠。",
+            "ans": "core",
+            "why": "【題目核心】指定兩個 AI 模組且全程禁用鍵盤滑鼠。"
+          },
+          {
+            "id": "j01_t3",
+            "text": "臉部選擇讀取鼻尖（第 2 點）X 座標分左、中、右，同側停留 2 秒執行一次，每次進入臉部畫面須先偵測到鼻尖在中央才開始計時；手勢 1～3 份維持 1 秒確定；結帳畫面須先偵測到拇指尖與食指尖分開再捏合才完成訂單，且每筆訂單只完成一次。",
+            "ans": "core",
+            "why": "【題目核心】先回中央、2 秒停留、1 秒手勢、先分開再捏合與單次結帳鎖定。"
+          }
+        ]
+      },
+      {
+        "heading": "二、清單加總、特例排除與優惠測試",
+        "segs": [
+          {
+            "id": "j01_t4",
+            "text": "至少使用三個對應清單（品名、數量、小計）並以迴圈逐筆加總；購物車為空時不得結帳。",
+            "ans": "core",
+            "why": "【題目核心】三清單＋迴圈加總＋空車保護。"
+          },
+          {
+            "id": "j01_t5",
+            "text": "優惠規則為滿 250 元折 30 元、滿 150 元且未滿 250 元折 15 元、未滿 150 元不折價；惟「特價鮮奶」因屬優惠商品，其金額不列入滿額折抵門檻之計算，但仍須計入購買總份數與最後實付金額中。測試須涵蓋三區間並包含可折抵金額恰好為 150 與 250 元之案例。",
+            "ans": "core",
+            "why": "【題目核心｜🕵️ 暗藏陷阱！】特例排除！迴圈裡必須分開累加「可折抵金額」與「訂單原價」，否則買鮮奶就會誤觸折扣！"
+          },
+          {
+            "id": "j01_t6",
+            "text": "若點餐明細超出畫面，可使用自動分頁或輪播呈現，並可於畫面加入 2 秒停留進度條與操作音效以提升互動體驗。",
+            "ans": "bonus",
+            "why": "【加分項】自動輪播、進度條與音效回饋為介面體驗加分亮點。"
+          }
+        ]
+      }
+    ],
+    "docReq": "1. 說明無接觸點餐與三種操作分工。<br>2. 列出角色、變數、清單、自訂積木與廣播名稱及用途（未使用註明「未使用」）。<br>3. 以流程圖、虛擬碼或文字說明點餐與特例排除計算流程。"
+  },
+  {
+    "id": "j02",
+    "cat": "jh",
+    "code": "J02",
+    "short": "生活組：圖書借還站（釋放額度）",
+    "groupHtml": "□國小動畫 AI 互動組 &nbsp;□國小遊戲 AI 互動組<br><strong>■國中生活 AI 互動組</strong> &nbsp;□國中 AI 智慧生活組",
+    "title": "J02｜AI 無接觸圖書借還自助站",
+    "trapSummary": "🕵️ 暗藏陷阱：歸還任一本書後，原本「每人限借 3 本」的額度必須即時釋放（還 1 本後立刻能再借 1 本），且不可重複借同一本、空清單不可還書！",
+    "context": [
+      {
+        "id": "j02_c1",
+        "text": "午休時間圖書館志工人力不足，同學常排長隊等待人工刷條碼借還書，因此學校規劃建置一套無人值班時段可用的自助借還系統。",
+        "ans": "theme",
+        "why": "【作品主題】校園圖書館無接觸自助借還站。"
+      },
+      {
+        "id": "j02_c2",
+        "text": "請設計一套無接觸圖書借還站，讓學生能透過臉部與手勢完成借書、查詢目前借閱清單以及歸還書籍作業。",
+        "ans": "goal",
+        "why": "【任務目標】讓學生無接觸完成借書、查詢與歸還流程。"
+      }
+    ],
+    "tasks": [
+      {
+        "heading": "一、無接觸操作流程",
+        "segs": [
+          {
+            "id": "j02_t1",
+            "text": "系統內建 4 本可借書籍（編號 1～4，或先選兩類再選書），全程採單人操作。",
+            "ans": null,
+            "why": "館藏基本設定。"
+          },
+          {
+            "id": "j02_t2",
+            "text": "除點擊綠旗外全程不得使用鍵盤或滑鼠；臉部鼻尖（第 2 點）停留 2 秒選擇「借書／還書」與選項（進入臉部畫面須先回中央），手勢 1～3 維持 1 秒選擇書號，並以兩指先分開再捏合完成借還確認。",
+            "ans": "core",
+            "why": "【題目核心】禁用鍵盤滑鼠、先回中央、2 秒停留、1 秒手勢與先分開再捏合。"
+          }
+        ]
+      },
+      {
+        "heading": "二、借閱額度、重複阻擋與即時釋放",
+        "segs": [
+          {
+            "id": "j02_t3",
+            "text": "系統須使用清單記錄「目前借閱中的書籍」，每位學生借閱上限為 3 本；當已達 3 本時禁止再借並顯示「已達借閱上限」，同一本書若已在借閱清單中亦不得重複借閱；若目前未借任何書卻進入還書流程，須顯示「目前無借閱紀錄」且不得執行歸還。",
+            "ans": "core",
+            "why": "【題目核心】3 本上限阻擋、同書重複借阻擋、空清單還書保護。"
+          },
+          {
+            "id": "j02_t4",
+            "text": "當學生成功歸還清單中的任一本書時，須將該書自借閱清單移除並即時釋放借閱額度（例如借滿 3 本後歸還 1 本，須能立即再借入 1 本新書），測試須涵蓋空清單還書、重複借同本以及「借滿 3 本 → 還 1 本 → 再借 1 本」完整流程。",
+            "ans": "core",
+            "why": "【題目核心｜🕵️ 暗藏陷阱！】不能只靠累加變數算借幾本，必須以「目前借閱清單長度」動態控管額度，確保歸還後立刻釋放！"
+          },
+          {
+            "id": "j02_t5",
+            "text": "參賽者可額外加入預估歸還日期顯示、借還成功音效回饋與停留進度環，讓自助站更貼近真實體驗。",
+            "ans": "bonus",
+            "why": "【加分項】歸還日期、音效與進度環屬於介面加分亮點。"
+          }
+        ]
+      }
+    ],
+    "docReq": "1. 說明無接觸借還流程與操作分工。<br>2. 列出角色、變數、清單、自訂積木與廣播名稱及用途。<br>3. 以流程圖、虛擬碼或文字說明借還狀態與額度釋放邏輯。"
+  },
+  {
+    "id": "j03",
+    "cat": "jh",
+    "code": "J03",
+    "short": "生活組：體適能教練（左右交替狀態機）",
+    "groupHtml": "□國小動畫 AI 互動組 &nbsp;□國小遊戲 AI 互動組<br><strong>■國中生活 AI 互動組</strong> &nbsp;□國中 AI 智慧生活組",
+    "title": "J03｜AI 體適能伸展互動教練",
+    "trapSummary": "🕵️ 暗藏陷阱：頭部伸展必須「左 → 中央 → 右」交替完成才算 1 組，連續兩次往同一側不得重複計次且要提示「請換邊伸展」！",
+    "context": [
+      {
+        "id": "j03_c1",
+        "text": "國中生上課與寫作業常長時間低頭久坐，容易造成肩頸僵硬與姿勢不良，體育老師希望在教室後方設置一台課間 3 分鐘互動伸展教練。",
+        "ans": "theme",
+        "why": "【作品主題】校園課間肩頸與手部體適能伸展互動。"
+      },
+      {
+        "id": "j03_c2",
+        "text": "請設計一套無接觸伸展教練系統，引導使用者依指示完成左右頭部伸展與手部動作，自動記錄達標次數並於結算時給予健康評等。",
+        "ans": "goal",
+        "why": "【任務目標】引導使用者完成伸展動作、計次並獲得健康評等。"
+      }
+    ],
+    "tasks": [
+      {
+        "heading": "一、動作偵測與交替計次規則",
+        "segs": [
+          {
+            "id": "j03_t1",
+            "text": "使用者站在鏡頭前即可跟著畫面指示伸展，無須碰觸電腦。",
+            "ans": null,
+            "why": "使用情境描述。"
+          },
+          {
+            "id": "j03_t2",
+            "text": "使用 Facemesh2Scratch 偵測鼻尖左右偏移（單側連續停留 2 秒達標）與 Handpose2Scratch 偵測指定伸展手勢（維持 2 秒計 1 次）；未滿 2 秒姿勢改變或未偵測到人臉／手部時皆須重新計時。",
+            "ans": "core",
+            "why": "【題目核心】雙 AI 模組 2 秒維持與中斷歸零規格。"
+          },
+          {
+            "id": "j03_t3",
+            "text": "頭部伸展須依「左側 2 秒 → 回到中央 → 右側 2 秒」交替完成才累計為 1 組有效伸展；若使用者連續兩次皆往同一側伸展，系統不得累計組數，並須顯示「請換邊伸展」提醒。",
+            "ans": "core",
+            "why": "【題目核心｜🕵️ 暗藏陷阱！】交替狀態機！必須記住上一次完成的是左邊還是右邊，防止單邊灌水洗分數！"
+          }
+        ]
+      },
+      {
+        "heading": "二、清單統計與健康評等",
+        "segs": [
+          {
+            "id": "j03_t4",
+            "text": "須使用清單記錄各項動作完成紀錄，並於結束時以迴圈加總總分進行評等：80 分以上顯示「體適能優秀」、60 分以上且未滿 80 分顯示「表現良好」、未滿 60 分顯示「請繼續加油」；若尚未完成任何動作即結算，須顯示「請先開始伸展！」不得評等。測試須包含恰好 60 與 80 分邊界。",
+            "ans": "core",
+            "why": "【題目核心】清單＋迴圈、三級評等與 60/80 邊界、0 次空狀態保護。"
+          },
+          {
+            "id": "j03_t5",
+            "text": "畫面可加上即時 2 秒倒數進度環、伸展小知識跑馬燈與鼓勵動畫，增加同學課間運動意願。",
+            "ans": "bonus",
+            "why": "【加分項】進度環、小知識與動畫為體驗加分項。"
+          }
+        ]
+      }
+    ],
+    "docReq": "1. 說明伸展偵測與操作設計。<br>2. 列出角色、變數、清單、自訂積木與廣播名稱及用途。<br>3. 以流程圖或虛擬碼說明交替計次與評等判斷流程。"
+  },
+  {
+    "id": "j04",
+    "cat": "jh",
+    "code": "J04",
+    "short": "生活組：社團導覽（提醒但不阻擋）",
+    "groupHtml": "□國小動畫 AI 互動組 &nbsp;□國小遊戲 AI 互動組<br><strong>■國中生活 AI 互動組</strong> &nbsp;□國中 AI 智慧生活組",
+    "title": "J04｜AI 校園社團博覽會無接觸導覽",
+    "trapSummary": "🕵️ 暗藏陷阱：區分「阻擋（重複加入、超過 3 個、0 個送出）」vs.「只提醒不阻擋（同時選兩個運動社團要提示『建議動靜均衡探索』但仍允許送出）」！",
+    "context": [
+      {
+        "id": "j04_c1",
+        "text": "開學社團博覽會現場熱鬧非凡，學校設有籃球社、羽球社（運動類）以及程式社、美術社（靜態類）四大社團，希望新生透過無接觸導覽機認識社團並填寫志願。",
+        "ans": "theme",
+        "why": "【作品主題】校園社團博覽會導覽（注意 2 個運動類、2 個靜態類的分類設定！）。"
+      },
+      {
+        "id": "j04_c2",
+        "text": "請設計一套無接觸社團導覽系統，引導新生以臉部切換瀏覽社團、手勢評分興趣星等並以捏合加入志願清單，最後產出最適合的社團推薦。",
+        "ans": "goal",
+        "why": "【任務目標】瀏覽社團、評分加入志願清單、產出推薦結果。"
+      }
+    ],
+    "tasks": [
+      {
+        "heading": "一、無接觸瀏覽與志願管理",
+        "segs": [
+          {
+            "id": "j04_t1",
+            "text": "除點擊綠旗外不得使用鍵盤或滑鼠；臉部鼻尖停留 2 秒切換社團或決定加入／略過（進畫面先回中央），手勢 1～3 給出興趣星等（維持 1 秒），最後以先分開再捏合送出志願。",
+            "ans": "core",
+            "why": "【題目核心】全程無接觸、先回中央、2 秒臉部、1 秒手勢與先分開再捏合。"
+          },
+          {
+            "id": "j04_t2",
+            "text": "至少使用兩個對應清單記錄「社團名稱」與「興趣星等」。同一社團不可重複加入志願，每位學生最多可選 3 個志願，且 0 個志願時不得送出。",
+            "ans": "core",
+            "why": "【題目核心】雙對應清單、不可重複加入、最多 3 個、0 個不得送出（這些都是「阻擋」規則）。"
+          },
+          {
+            "id": "j04_t3",
+            "text": "為鼓勵多元發展，若學生在志願中同時加入兩個運動類社團（籃球社與羽球社），系統須顯示「建議動靜均衡探索」提醒，但仍須允許學生繼續加入並送出志願；送出後以迴圈讀取清單，找出興趣星等最高的所有社團，若有並列須全部顯示。",
+            "ans": "core",
+            "why": "【題目核心｜🕵️ 暗藏陷阱！】看清楚是「提醒但仍允許加入與送出」，千萬別寫成阻擋！加上最高星等並列全顯示！"
+          },
+          {
+            "id": "j04_t4",
+            "text": "志願明細可搭配自動輪播與社團圖文切換動畫、提示音效，讓導覽畫面更吸引新生。",
+            "ans": "bonus",
+            "why": "【加分項】自動輪播、動畫與音效屬於加分亮點。"
+          }
+        ]
+      }
+    ],
+    "docReq": "1. 說明無接觸導覽與三種操作分工。<br>2. 列出角色、變數、清單、自訂積木與廣播名稱及用途。<br>3. 以流程圖或文字說明志願阻擋、動靜提醒與最高分並列流程。"
+  },
+  {
+    "id": "j05",
+    "cat": "jh",
+    "code": "J05",
+    "short": "生活組：班費小管家（期初 500 元陷阱）",
+    "groupHtml": "□國小動畫 AI 互動組 &nbsp;□國小遊戲 AI 互動組<br><strong>■國中生活 AI 互動組</strong> &nbsp;□國中 AI 智慧生活組",
+    "title": "J05｜AI 無接觸班費收支小管家",
+    "trapSummary": "🕵️ 暗藏陷阱：① 期初班費是「500 元」不是 0 元（點綠旗重設要回到 500！）；② 剛好花到餘額 0 元是「允許」的，只有「支出 > 結餘」才阻擋！",
+    "context": [
+      {
+        "id": "j05_c1",
+        "text": "校慶園遊會當天，八年二班的飲料攤位雙手忙著裝飲料和找零，班長手上有期初已提領的 500 元班費週轉金，急需一套不用碰鍵盤滑鼠的記帳工具即時掌握收支。",
+        "ans": "theme",
+        "why": "【作品主題｜🕵️ 藏有線索！】園遊會班費無接觸記帳，情境裡直接點出期初有「500 元」班費！"
+      },
+      {
+        "id": "j05_c2",
+        "text": "請設計一套無接觸班費小管家，讓班長以臉部選擇收入或支出與項目、手勢輸入單位數量並以捏合入帳，即時核算總收入、總支出與目前結餘。",
+        "ans": "goal",
+        "why": "【任務目標】無接觸登錄收支並即時核算總收入、總支出與結餘。"
+      }
+    ],
+    "tasks": [
+      {
+        "heading": "一、無接觸記帳與非零初始餘額",
+        "segs": [
+          {
+            "id": "j05_t1",
+            "text": "除點擊綠旗外全程禁用鍵盤滑鼠；臉部停留 2 秒選擇「收入／支出」與項目（進入畫面先回中央）、手勢 1～3 選擇單位數（1 秒）、結帳登錄前須先分開兩指再捏合且每筆僅登錄一次。",
+            "ans": "core",
+            "why": "【題目核心】全程無接觸與防誤觸規範。"
+          },
+          {
+            "id": "j05_t2",
+            "text": "每次點擊綠旗啟動或重新開始時，系統須清空收支清單並將班費初始餘額重設為 500 元（不得歸零）。至少使用三個對應清單（收支類型、項目名稱、金額），並以迴圈逐筆加總總收入與總支出，計算目前結餘（500＋總收入－總支出）。",
+            "ans": "core",
+            "why": "【題目核心｜🕵️ 暗藏陷阱！】初始餘額必須重設為 500 元而非 0 元，並用三清單＋迴圈計算結餘！"
+          },
+          {
+            "id": "j05_t3",
+            "text": "登錄「支出」時，若本次支出金額大於目前結餘，系統須禁止寫入清單並顯示「餘額不足！」；若支出後剛好結餘為 0 元則允許登錄。測試須涵蓋「剛好結餘歸零」與「超支阻擋」兩種邊界情況。",
+            "ans": "core",
+            "why": "【題目核心｜🕵️ 暗藏陷阱！】判斷條件是「支出 > 結餘」才擋（不可寫成 >=），剛好花完剩 0 元必須允許！"
+          },
+          {
+            "id": "j05_t4",
+            "text": "明細過長時可採自動分頁或輪播呈現，並可依結餘水位顯示不同顏色的警示燈號。",
+            "ans": "bonus",
+            "why": "【加分項】自動分頁輪播與結餘水位警示燈為體驗加分項。"
+          }
+        ]
+      }
+    ],
+    "docReq": "1. 說明無接觸記帳流程與操作分工。<br>2. 列出角色、變數、清單、自訂積木與廣播名稱及用途。<br>3. 以流程圖或虛擬碼說明期初 500 元重設、結餘計算與超支阻擋邏輯。"
+  },
+  {
+    "id": "j06",
+    "cat": "jh",
+    "code": "J06",
+    "short": "智慧組：智慧回收分類站",
+    "groupHtml": "□國小動畫 AI 互動組 &nbsp;□國小遊戲 AI 互動組<br>□國中生活 AI 互動組 &nbsp;<strong>■國中 AI 智慧生活組</strong>",
+    "title": "J06｜AI 智慧資源回收分類站",
+    "trapSummary": "AI 智慧生活組標準暖身：5 類別含背景、2 秒鎖定防重複、各類不同點數迴圈加總、邊界 10/20 點兌獎、0 筆保護與必交 JSON 檔。",
+    "context": [
+      {
+        "id": "j06_c1",
+        "text": "學校資源回收室常發生同學把鋁罐丟進塑膠桶、玻璃瓶混入一般垃圾的情況，學校希望導入 AI 影像辨識回收站，並以環保集點鼓勵同學正確分類。",
+        "ans": "theme",
+        "why": "【作品主題】校園 AI 影像資源回收與環保集點兌獎。"
+      },
+      {
+        "id": "j06_c2",
+        "text": "請設計一套「AI 智慧資源回收分類站」，透過回收物圖卡記錄每次投入的回收歷程，統計各類數量與環保點數，並判斷可兌換的獎勵等級。",
+        "ans": "goal",
+        "why": "【任務目標】透過圖卡辨識記錄回收歷程、統計點數並判斷獎勵等級。"
+      }
+    ],
+    "tasks": [
+      {
+        "heading": "一、模型訓練與穩定辨識",
+        "segs": [
+          {
+            "id": "j06_t1",
+            "text": "使用 ML2Scratch 訓練模型，將大會提供之圖卡分為「紙類、塑膠、金屬、玻璃」四類，並另建「無圖卡（背景）」類別。",
+            "ans": "core",
+            "why": "【題目核心】ML2Scratch 5 個必建類別（含背景）。"
+          },
+          {
+            "id": "j06_t2",
+            "text": "同一類別須連續辨識成功 2 秒方加入回收紀錄清單末端，未滿 2 秒若結果改變須重新計時；圖卡持續出示僅能記錄一次，移開並回到背景後方可再次記錄，且須保留投入順序。",
+            "ans": "core",
+            "why": "【題目核心】2 秒連續確認、改變歸零與回背景防重複。"
+          }
+        ]
+      },
+      {
+        "heading": "二、點數換算、邊界兌獎與繳交",
+        "segs": [
+          {
+            "id": "j06_t3",
+            "text": "按鍵或按鈕結束投入後，以迴圈讀取清單統計各類數量與環保點數（紙類 2 點、塑膠 3 點、金屬 4 點、玻璃 5 點），並依總點數判定兌換等級：20 點以上「環保金獎」、10 點以上未滿 20 點「環保銀獎」、未滿 10 點「繼續集點」。",
+            "ans": "core",
+            "why": "【題目核心】各類點數權重不同＋迴圈統計＋三級兌獎區間。"
+          },
+          {
+            "id": "j06_t4",
+            "text": "無紀錄時按結束須顯示「請先投入回收物」不得兌獎；分析後須能繼續新增並重新計算。測試須涵蓋 0 筆及總點數恰好為 10、20 點之案例，並繳交 .sb3 作品檔、程式說明文件與模型訓練檔（JSON）。",
+            "ans": "core",
+            "why": "【題目核心】0 筆保護、續記重算、10/20 邊界測試與三檔案（含 JSON）必交！"
+          },
+          {
+            "id": "j06_t5",
+            "text": "可於介面加入 2 秒確認進度環、提供「刪除最後一筆／重新辨識」誤判修正按鈕與回收分類動畫。",
+            "ans": "bonus",
+            "why": "【加分項】進度環、誤判刪除鍵與動畫可大幅提升穩定度與介面分數。"
+          }
+        ]
+      }
+    ],
+    "docReq": "1. 任務規劃：情境、目標、操作與關鍵變數、清單、廣播、自訂積木用途。<br>2. AI 應用流程規劃：類別（含背景）、取樣張數與方式、穩定判定、誤判處理與流程圖。"
+  },
+  {
+    "id": "j07",
+    "cat": "jh",
+    "code": "J07",
+    "short": "智慧組：營養午餐分析師（缺＋多並存）",
+    "groupHtml": "□國小動畫 AI 互動組 &nbsp;□國小遊戲 AI 互動組<br>□國中生活 AI 互動組 &nbsp;<strong>■國中 AI 智慧生活組</strong>",
+    "title": "J07｜AI 營養午餐均衡分析師",
+    "trapSummary": "🕵️ 暗藏陷阱：「缺少（0 份）」與「過多（>2 份）」可能同時成立！不可寫成互斥 if-else，兩類建議必須完整並列顯示！",
+    "context": [
+      {
+        "id": "j07_c1",
+        "text": "國中生在自助餐夾菜時常偏愛肉類與澱粉、忽略蔬菜和水果，長期下來營養失衡，學校營養師希望設計一台能快速掃描餐盤食物並給建議的 AI 幫手。",
+        "ans": "theme",
+        "why": "【作品主題】校園營養午餐均衡分析情境。"
+      },
+      {
+        "id": "j07_c2",
+        "text": "請設計一套「AI 營養午餐均衡分析師」，透過食物圖卡記錄一餐的菜色分布，分析缺少或過多的類別並即時給予調整建議。",
+        "ans": "goal",
+        "why": "【任務目標】記錄一餐菜色分布、分析缺漏或過量並提供建議。"
+      }
+    ],
+    "tasks": [
+      {
+        "heading": "一、模型訓練與餐點記錄",
+        "segs": [
+          {
+            "id": "j07_t1",
+            "text": "使用 ML2Scratch 訓練「全穀雜糧、豆魚蛋肉、蔬菜、水果」四類食物圖卡，另建「無圖卡（背景）」類別。",
+            "ans": "core",
+            "why": "【題目核心】5 個必建類別（含背景）。"
+          },
+          {
+            "id": "j07_t2",
+            "text": "同一類別須連續辨識 2 秒方寫入餐點紀錄清單末端，移開回到背景才可再次記錄，且清單不得刪除較早紀錄。",
+            "ans": "core",
+            "why": "【題目核心】2 秒防重複與保留完整清單。"
+          }
+        ]
+      },
+      {
+        "heading": "二、雙向均衡分析與測試繳交",
+        "segs": [
+          {
+            "id": "j07_t3",
+            "text": "結束記錄後統計各類份數：任一類別為 0 份須提示「缺少該類」、超過 2 份（含 3 份以上）須提示「攝取過多」，僅當四類皆為 1 至 2 份時始顯示「非常均衡！」；若同一餐中同時存在缺少（0 份）與過多（3 份以上）的類別，兩類建議皆須完整並列顯示，不得只顯示其中一種。",
+            "ans": "core",
+            "why": "【題目核心｜🕵️ 暗藏陷阱！】「缺少」與「過多」會同時發生（例如蔬菜 0 份＋肉類 3 份），不能用互斥的 if/else if 寫死！"
+          },
+          {
+            "id": "j07_t4",
+            "text": "無紀錄時顯示「請先記錄餐點」不得分析；分析後須能繼續新增餐點並重新分析。須以「1 至 4 筆」及「5 筆以上」測試，並繳交 .sb3、程式說明文件與 JSON 模型訓練檔。",
+            "ans": "core",
+            "why": "【題目核心】空狀態保護、續記重算、兩組筆數測試與三檔必交（含 JSON）。"
+          },
+          {
+            "id": "j07_t5",
+            "text": "可加入「刪除最後一筆」誤判補救鍵、辨識進度環與營養師角色的語音／文字互動建議。",
+            "ans": "bonus",
+            "why": "【加分項】誤判修正鍵與互動進度環為加分亮點。"
+          }
+        ]
+      }
+    ],
+    "docReq": "1. 任務規劃：情境、目標、功能與變數、清單、廣播、自訂積木用途。<br>2. AI 應用流程規劃：類別（含背景）、取樣策略、穩定判定、誤判處理與流程圖。"
+  },
+  {
+    "id": "j08",
+    "cat": "jh",
+    "code": "J08",
+    "short": "智慧組：校園植物圖鑑（重複雙軌計數）",
+    "groupHtml": "□國小動畫 AI 互動組 &nbsp;□國小遊戲 AI 互動組<br>□國中生活 AI 互動組 &nbsp;<strong>■國中 AI 智慧生活組</strong>",
+    "title": "J08｜AI 校園植物圖鑑辨識小幫手",
+    "trapSummary": "🕵️ 暗藏陷阱：重複掃描同一種植物時，「總探索次數」仍須 +1，但「已收集不同植物種數」不增加，且畫面須明確顯示「已收錄過此植物」！",
+    "context": [
+      {
+        "id": "j08_c1",
+        "text": "自然課進行校園生態踏查時，同學常分不清楚不同樹木的葉片，也常重複拍到同一種植物卻沒發現還有幾種校園代表植物還沒找到。",
+        "ans": "theme",
+        "why": "【作品主題】自然課校園植物葉片踏查與圖鑑收集。"
+      },
+      {
+        "id": "j08_c2",
+        "text": "請設計一套「AI 校園植物圖鑑辨識小幫手」，透過植物圖卡辨識記錄觀察歷程，同時統計探索次數與圖鑑收集進度。",
+        "ans": "goal",
+        "why": "【任務目標】辨識植物圖卡、記錄觀察歷程並追蹤圖鑑進度。"
+      }
+    ],
+    "tasks": [
+      {
+        "heading": "一、模型訓練與雙軌計數規則",
+        "segs": [
+          {
+            "id": "j08_t1",
+            "text": "使用 ML2Scratch 訓練 4 種指定校園植物圖卡（榕樹、樟樹、茄苳、臺灣欒樹）及「無圖卡（背景）」共 5 類；同一類連續辨識 2 秒記錄、移開回背景防重複。",
+            "ans": "core",
+            "why": "【題目核心】5 類模型與 2 秒鎖定防重複。"
+          },
+          {
+            "id": "j08_t2",
+            "text": "系統須同時區分「總探索次數（完整掃描清單筆數）」與「已收集不同植物種數（上限 4 種）」：當使用者重複掃描已收錄過的植物時，總探索次數仍須加 1，但已收集種數不得重複增加，且畫面須即時顯示「已收錄過此植物」提醒。",
+            "ans": "core",
+            "why": "【題目核心｜🕵️ 暗藏陷阱！】重複掃描不能直接擋掉不記（總次數要 +1），也不能讓圖鑑變 5/4，且要有專屬提醒文字！"
+          }
+        ]
+      },
+      {
+        "heading": "二、圖鑑結算與測試繳交",
+        "segs": [
+          {
+            "id": "j08_t3",
+            "text": "結束探索後，若已集滿 4 種不同植物須顯示「恭喜達成植物達人！」；若未集滿，須明確列出「尚未找到的所有植物名稱」。無紀錄時顯示「請先掃描植物」不得結算；須能繼續探索並重新結算。",
+            "ans": "core",
+            "why": "【題目核心】集滿指定文字、列出未找到清單、空狀態保護與續記重算。"
+          },
+          {
+            "id": "j08_t4",
+            "text": "須分別測試「含重複植物辨識（未集滿）」與「集滿 4 種不同植物」案例，並繳交 .sb3、程式說明文件與模型訓練檔（JSON）。",
+            "ans": "core",
+            "why": "【題目核心】兩組必測案例與必交三檔案（含 JSON）。"
+          },
+          {
+            "id": "j08_t5",
+            "text": "掃描成功時可額外顯示該植物的特徵簡介卡片、辨識進度條與「刪除最後一筆」誤判修正鍵。",
+            "ans": "bonus",
+            "why": "【加分項】植物小百科卡片、進度條與誤判修正鍵為加分亮點。"
+          }
+        ]
+      }
+    ],
+    "docReq": "1. 任務規劃：情境、目標、功能與變數、清單、廣播、自訂積木用途。<br>2. AI 應用流程規劃：類別（含背景）、取樣方式、穩定判定、雙軌計數與流程圖。"
+  },
+  {
+    "id": "j09",
+    "cat": "jh",
+    "code": "J09",
+    "short": "智慧組：智慧衣櫃顧問（缺＋多雙向查）",
+    "groupHtml": "□國小動畫 AI 互動組 &nbsp;□國小遊戲 AI 互動組<br>□國中生活 AI 互動組 &nbsp;<strong>■國中 AI 智慧生活組</strong>",
+    "title": "J09｜AI 智慧衣櫃穿搭天氣顧問",
+    "trapSummary": "🕵️ 暗藏陷阱：雙向檢核！不只是檢查「少了哪些必備衣物」，在「炎熱晴天」掃描到「外套」時，還要反向抓出「多帶了不合時宜的衣物」且不得顯示穿搭滿分！",
+    "context": [
+      {
+        "id": "j09_c1",
+        "text": "花蓮早晚溫差大又常突然下雨，同學出門上學常忘記帶雨具，或者大熱天卻多背了一件厚外套，造成生活不便。",
+        "ans": "theme",
+        "why": "【作品主題】花蓮多變天氣下的智慧衣櫃穿搭檢查情境。"
+      },
+      {
+        "id": "j09_c2",
+        "text": "請設計一套「AI 智慧衣櫃穿搭天氣顧問」，依使用者選定的當日天氣，透過衣物圖卡檢查出門裝備是否遺漏必備衣物或帶了不適合的衣物。",
+        "ans": "goal",
+        "why": "【任務目標】依天氣檢查衣物是否缺漏或過多並給出建議。"
+      }
+    ],
+    "tasks": [
+      {
+        "heading": "一、模型訓練與雙向穿搭檢核",
+        "segs": [
+          {
+            "id": "j09_t1",
+            "text": "使用 ML2Scratch 訓練「短袖、長袖、外套、雨具」四類衣物圖卡，另建「無圖卡（背景）」類別；同一類連續辨識 2 秒加入準備清單，移開回背景方可再記。",
+            "ans": "core",
+            "why": "【題目核心】5 類模型與 2 秒鎖定防重複。"
+          },
+          {
+            "id": "j09_t2",
+            "text": "系統至少須提供兩種天氣模式供選擇：「寒流雨天」必備長袖、外套與雨具；「炎熱晴天」必備短袖。結束掃描後須比對清單列出所有缺少的必備衣物；此外，若於「炎熱晴天」模式中掃描到「外套」，即使已備妥短袖，系統仍須額外提示「天氣炎熱，建議不需帶外套」且不得顯示「穿搭滿分！」。僅於無缺漏且無不合時宜衣物時，始顯示「穿搭滿分！」。",
+            "ans": "core",
+            "why": "【題目核心｜🕵️ 暗藏陷阱！】雙向檢核：寒流雨天查缺少、炎熱晴天除了查短袖，還要反向抓出「多帶外套」且不能給滿分！"
+          },
+          {
+            "id": "j09_t3",
+            "text": "未掃描任何衣物不得分析並顯示「請先出示衣物圖卡」；分析後須能繼續補掃衣物並重新檢查。須測試「缺少衣物」、「炎熱晴天多帶外套」與「穿搭滿分」，並繳交 .sb3、程式說明文件與模型訓練檔（JSON）。",
+            "ans": "core",
+            "why": "【題目核心】空狀態保護、補掃重算、三種測試案例與必交 JSON 檔。"
+          },
+          {
+            "id": "j09_t4",
+            "text": "可加入辨識倒數進度條、誤判「刪除最後一筆」按鈕以及隨天氣切換的動態背景效果。",
+            "ans": "bonus",
+            "why": "【加分項】進度條、誤判刪除與天氣動畫為加分亮點。"
+          }
+        ]
+      }
+    ],
+    "docReq": "1. 任務規劃：情境、目標、功能與變數、清單、廣播、自訂積木用途。<br>2. AI 應用流程規劃：類別（含背景）、取樣方式、穩定判定、雙向檢查規則與流程圖。"
+  },
+  {
+    "id": "j10",
+    "cat": "jh",
+    "code": "J10",
+    "short": "智慧組：教室器材管理員（干擾圖卡！）",
+    "groupHtml": "□國小動畫 AI 互動組 &nbsp;□國小遊戲 AI 互動組<br>□國中生活 AI 互動組 &nbsp;<strong>■國中 AI 智慧生活組</strong>",
+    "title": "J10｜AI 教室器材借用管理員",
+    "trapSummary": "🕵️ 暗藏陷阱：① 呼應工作坊「資料篩選考點」：大會發的 5 張圖卡混了 1 張無關的「板擦」，絕不可納入訓練！② 狀態機雙向防呆（不可重複借、不可憑空還）！",
+    "context": [
+      {
+        "id": "j10_c1",
+        "text": "資訊教室的公用電子器材每天都有不同班級借用，過去靠紙本簽名常漏寫歸還紀錄，導致下課後器材不翼而飛，管理老師相當頭痛。",
+        "ans": "theme",
+        "why": "【作品主題】資訊教室公用電子器材借還管理系統。"
+      },
+      {
+        "id": "j10_c2",
+        "text": "請設計一套「AI 教室器材借用管理員」，透過器材圖卡快速登錄「借出」與「歸還」，即時掌握目前未歸還清單與各器材累計借用次數。",
+        "ans": "goal",
+        "why": "【任務目標】以圖卡登錄借還、追蹤未歸還清單與累計借用次數。"
+      }
+    ],
+    "tasks": [
+      {
+        "heading": "一、資料篩選與借還狀態機",
+        "segs": [
+          {
+            "id": "j10_t1",
+            "text": "本題聚焦管理教室電子公用器材，大會發放之實體圖卡共 5 張（平板、麥克風、簡報筆、轉接頭、板擦），其中「板擦」非電子器材屬干擾素材，參賽者須自行篩選，僅可針對前 4 項電子器材及「無圖卡（背景）」共 5 類訓練 ML2Scratch 模型。",
+            "ans": "core",
+            "why": "【題目核心｜🕵️ 暗藏陷阱！】資料篩選考點！把干擾圖卡「板擦」傻傻一起訓練就違反規格！"
+          },
+          {
+            "id": "j10_t2",
+            "text": "同一器材圖卡須連續辨識 2 秒方執行借出或歸還登錄，移開回到背景後方可再次操作。系統須同時維護「完整借用歷史清單（累計次數，不得刪除）」與「目前未歸還清單」；同一器材若已處於借出狀態則禁止重複借出並提示「此器材已借出」，若尚未借出卻執行歸還亦須阻擋並提示「此器材尚未借出」。",
+            "ans": "core",
+            "why": "【題目核心｜🕵️ 暗藏陷阱！】雙清單設計（歷史不可刪 vs. 目前未歸還）＋雙向防呆（不可重複借、不可憑空還）！"
+          }
+        ]
+      },
+      {
+        "heading": "二、結算統計與測試繳交",
+        "segs": [
+          {
+            "id": "j10_t3",
+            "text": "結束管理並結算時，須列出目前所有未歸還器材（若全數歸還須顯示「器材已全數歸還！」），並依歷史清單統計累計借用次數最多的所有器材（並列須全部顯示）。測試須涵蓋重複借出阻擋、未借先還阻擋與全數歸還，並繳交 .sb3、程式說明文件與模型訓練檔（JSON）。",
+            "ans": "core",
+            "why": "【題目核心】未歸還清單與全歸還文字、最常借用並列全顯示、完整測試與必交 JSON 檔。"
+          },
+          {
+            "id": "j10_t4",
+            "text": "參賽者可於介面加入「撤銷上一筆誤判」按鈕、2 秒辨識進度環與各器材即時借還狀態燈號。",
+            "ans": "bonus",
+            "why": "【加分項】撤銷誤判鍵、進度環與狀態燈號能大幅提升系統完整度與介面分數。"
+          }
+        ]
+      }
+    ],
+    "docReq": "1. 任務規劃：情境、目標、功能與變數、清單、廣播、自訂積木用途。<br>2. AI 應用流程規劃：說明如何篩選排除干擾圖卡、類別（含背景）、穩定判定、狀態機防呆與流程圖。"
+  }
+];
+
+// State + localStorage persistence
+const STORAGE_KEY = "catcup_115_reading_v2";
+let savedState = {};
+try { savedState = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch (e) {}
+
+let currentLevel = "all"; // "elem" | "jh" | "all"
+let currentCat = "official";
+let currentExamId = EXAMS[0].id;
+let currentMode = "demo";
+let currentPen = "core";
+let marksByExam = savedState.marksByExam || {};
+let bestScoreByExam = savedState.bestScoreByExam || {};
+let gradedByExam = {};
+let revealedByExam = {};
+
+function getVisibleExamsForCat(cat) {
+  return EXAMS.filter(e => {
+    if (e.cat !== cat) return false;
+    if (currentLevel === "elem" && cat === "official") return e.id === "off_elem";
+    if (currentLevel === "jh" && cat === "official") return e.id === "off_jhl" || e.id === "off_jhs";
+    return true;
+  });
+}
+
+function renderCatTabs() {
+  const tabsEl = document.getElementById("catTabs");
+  let tabs = [];
+  if (currentLevel === "elem") {
+    tabs = [
+      { cat: "official", label: "📌 國小官方示範（1 題）" },
+      { cat: "elem",     label: "🟩 國小實戰練習（10 題）" },
+    ];
+  } else if (currentLevel === "jh") {
+    tabs = [
+      { cat: "official", label: "📌 國中官方示範（2 題）" },
+      { cat: "jh",       label: "🟦 國中實戰練習（10 題）" },
+    ];
+  } else {
+    tabs = [
+      { cat: "official", label: "📌 官方示範（3 題）" },
+      { cat: "elem",     label: "🟩 國小練習（10 題）" },
+      { cat: "jh",       label: "🟦 國中練習（10 題）" },
+    ];
+  }
+
+  tabsEl.innerHTML = tabs.map(t =>
+    `<button class="cat-btn" data-cat="${t.cat}" aria-pressed="${t.cat === currentCat}">${t.label}</button>`
+  ).join("");
+
+  tabsEl.querySelectorAll(".cat-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      currentCat = btn.dataset.cat;
+      const list = getVisibleExamsForCat(currentCat);
+      if (list.length) currentExamId = list[0].id;
+      document.getElementById("explainBox").innerHTML = "點選題目中任何一段文字，這裡會顯示詳細解析！";
+      renderCatTabs();
+      renderPicker();
+      renderExam();
+    });
+  });
+}
+
+function enterLevel(level) {
+  currentLevel = level;
+  if (level === "elem") {
+    currentCat = "elem";
+    currentMode = "quiz";
+    document.getElementById("levelBadge").textContent = "🟩 國小組";
+  } else if (level === "jh") {
+    currentCat = "jh";
+    currentMode = "quiz";
+    document.getElementById("levelBadge").textContent = "🟦 國中組";
+  } else {
+    currentCat = "official";
+    currentMode = "demo";
+    document.getElementById("levelBadge").textContent = "🎓 老師示範（全部）";
+  }
+
+  document.querySelectorAll(".mode-btn").forEach(b => {
+    b.setAttribute("aria-pressed", String(b.dataset.mode === currentMode));
+  });
+
+  const list = getVisibleExamsForCat(currentCat);
+  if (list.length) currentExamId = list[0].id;
+  seconds = 0;
+  timerRunning = true;
+
+  document.getElementById("entryOverlay").classList.add("hidden");
+  document.getElementById("explainBox").innerHTML = "點選題目中任何一段文字，這裡會顯示詳細解析！";
+  renderCatTabs();
+  renderPicker();
+  renderExam();
+}
+
+document.getElementById("chooseElem").addEventListener("click", () => enterLevel("elem"));
+document.getElementById("chooseJH").addEventListener("click", () => enterLevel("jh"));
+document.getElementById("chooseTeacher").addEventListener("click", () => enterLevel("all"));
+document.getElementById("btnHome").addEventListener("click", () => {
+  document.getElementById("entryOverlay").classList.remove("hidden");
+});
+
+function saveProgress() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ marksByExam, bestScoreByExam }));
+  } catch (e) {}
+}
+
+function getExam(id) {
+  return EXAMS.find(e => e.id === id) || EXAMS[0];
+}
+
+function getAllSegments(exam) {
+  const list = [...exam.context];
+  exam.tasks.forEach(t => list.push(...t.segs));
+  return list;
+}
+
+// Timer
+let seconds = 0;
+let timerRunning = true;
+setInterval(() => {
+  if (!timerRunning) return;
+  seconds++;
+  const m = String(Math.floor(seconds / 60)).padStart(2, "0");
+  const s = String(seconds % 60).padStart(2, "0");
+  document.getElementById("timerDisplay").textContent = `⏱ ${m}:${s}`;
+}, 1000);
+
+document.getElementById("timerDisplay").addEventListener("click", () => {
+  timerRunning = !timerRunning;
+  document.getElementById("timerDisplay").style.opacity = timerRunning ? "1" : "0.55";
+});
+
+function renderPicker() {
+  const list = getVisibleExamsForCat(currentCat);
+  const picker = document.getElementById("examPicker");
+  picker.innerHTML = list.map(ex => {
+    const best = bestScoreByExam[ex.id];
+    const badge = best !== undefined ? `<span class="chip-score">${best}分</span>` : "";
+    return `<button class="exam-chip" data-id="${ex.id}" aria-pressed="${ex.id === currentExamId}">${ex.code} ${ex.short}${badge}</button>`;
+  }).join("");
+
+  picker.querySelectorAll(".exam-chip").forEach(btn => {
+    btn.addEventListener("click", () => {
+      currentExamId = btn.dataset.id;
+      if (currentMode === "quiz") { seconds = 0; timerRunning = true; }
+      document.getElementById("explainBox").innerHTML = "點選題目中任何一段文字，這裡會顯示詳細解析！";
+      renderPicker();
+      renderExam();
+    });
+  });
+}
+
+function renderExam() {
+  const ex = getExam(currentExamId);
+  const marks = marksByExam[ex.id] || {};
+  const isGraded = !!gradedByExam[ex.id];
+
+  document.getElementById("paperSub").textContent =
+    ex.cat === "official" ? "初賽題目（官方示範）" :
+    ex.cat === "elem" ? "大量讀題實戰練習（國小組）" : "大量讀題實戰練習（國中組）";
+
+  const makeSegHtml = (seg) => {
+    const m = marks[seg.id] || "";
+    let cls = "seg";
+    if (isGraded) {
+      if (seg.ans && m === seg.ans) cls += " grade-correct";
+      else if (seg.ans && m && m !== seg.ans) cls += " grade-wrong-color";
+      else if (seg.ans && !m) cls += " grade-missed";
+      else if (!seg.ans && m) cls += " grade-extra";
+    }
+    return `<span class="${cls}" data-id="${seg.id}" ${m ? `data-marked="${m}"` : ""}>${seg.text}</span>`;
+  };
+
+  const contextHtml = ex.context.map(makeSegHtml).join("");
+  const tasksHtml = ex.tasks.map(t => `
+    <div class="task-block">
+      <div class="task-heading">${t.heading}</div>
+      <div>${t.segs.map(makeSegHtml).join("")}</div>
+    </div>
+  `).join("");
+
+  document.getElementById("examTable").innerHTML = `
+    <tr><th>組別</th><td>${ex.groupHtml}</td></tr>
+    <tr><th>題目</th><td><strong>${ex.title}</strong></td></tr>
+    <tr><th>情境<br>說明</th><td>${contextHtml}</td></tr>
+    <tr><th>任務<br>說明</th><td>${tasksHtml}</td></tr>
+    <tr><th>程式<br>說明<br>文件</th><td>${ex.docReq}</td></tr>
+  `;
+
+  document.querySelectorAll(".seg").forEach(el => {
+    el.addEventListener("click", () => handleSegClick(el.dataset.id));
+  });
+
+  renderChecklist();
+  updateHeaderUI();
+}
+
+function handleSegClick(segId) {
+  const ex = getExam(currentExamId);
+  if (!marksByExam[ex.id]) marksByExam[ex.id] = {};
+  const marks = marksByExam[ex.id];
+  const seg = getAllSegments(ex).find(s => s.id === segId);
+
+  if (currentPen === "eraser") {
+    delete marks[segId];
+  } else {
+    if (marks[segId] === currentPen) delete marks[segId];
+    else marks[segId] = currentPen;
+  }
+  saveProgress();
+
+  if (currentMode === "demo" || gradedByExam[ex.id] || revealedByExam[ex.id]) {
+    showExplain(seg);
+  } else {
+    document.getElementById("explainBox").innerHTML =
+      `已標記為 <strong>${currentPen === "eraser" ? "清除" : PEN_META[currentPen].emoji + " " + PEN_META[currentPen].name}</strong>！<br>全部標記完成後，按下上方「✅ 交卷批改」即可看分數、抓出暗藏陷阱與解析。`;
+  }
+
+  renderExam();
+}
+
+function showExplain(seg) {
+  const box = document.getElementById("explainBox");
+  if (!seg) return;
+  const ansLabel = seg.ans
+    ? `${PEN_META[seg.ans].emoji} 建議歸類：<strong>${PEN_META[seg.ans].name}</strong>`
+    : `⚪ 一般敘述／舉例（不需特別畫線）`;
+  box.innerHTML = `
+    <div style="margin-bottom:6px;">${ansLabel}</div>
+    <div style="color:#475569; font-size:12.5px; margin-bottom:6px;">「${seg.text}」</div>
+    <div><strong>解析：</strong>${seg.why}</div>
+  `;
+}
+
+function renderChecklist() {
+  const ex = getExam(currentExamId);
+  const marks = marksByExam[ex.id] || {};
+  const segs = getAllSegments(ex);
+  const grouped = { core: [], bonus: [], goal: [], theme: [] };
+
+  segs.forEach(s => {
+    const m = marks[s.id];
+    if (m && grouped[m]) grouped[m].push(s);
+  });
+
+  const totalMarked = Object.keys(marks).length;
+  const totalTargets = segs.filter(s => s.ans).length;
+  document.getElementById("progressText").textContent =
+    currentMode === "quiz"
+      ? `已塗色：${totalMarked} 段（本題藏有 ${totalTargets} 個重點）`
+      : `已塗色：${totalMarked} / ${totalTargets} 個重點`;
+
+  const container = document.getElementById("checklistContainer");
+  container.innerHTML = ["core", "bonus", "goal", "theme"].map(key => {
+    const meta = PEN_META[key];
+    const items = grouped[key];
+    const listHtml = items.length
+      ? `<ul class="cg-list">${items.map(it => `
+          <li class="cg-item" data-jump="${it.id}">
+            <span>☐</span>
+            <span>${it.text}</span>
+          </li>`).join("")}</ul>`
+      : `<div class="cg-empty">尚未標記此類</div>`;
+
+    return `
+      <div class="checklist-group">
+        <div class="cg-header ${key}">
+          <span>${meta.emoji} ${meta.name}</span>
+          <span>${items.length} 項</span>
+        </div>
+        ${listHtml}
+      </div>
+    `;
+  }).join("");
+
+  container.querySelectorAll(".cg-item").forEach(li => {
+    li.addEventListener("click", () => {
+      const seg = segs.find(s => s.id === li.dataset.jump);
+      if (currentMode === "demo" || gradedByExam[ex.id] || revealedByExam[ex.id]) showExplain(seg);
+      const target = document.querySelector(`.seg[data-id="${li.dataset.jump}"]`);
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  });
+}
+
+function updateHeaderUI() {
+  const ex = getExam(currentExamId);
+  const isQuiz = currentMode === "quiz";
+  const isGraded = !!gradedByExam[ex.id];
+  const isRevealed = !!revealedByExam[ex.id];
+
+  document.getElementById("btnGrade").style.display = isQuiz ? "inline-block" : "none";
+  document.getElementById("btnReveal").style.display = (!isQuiz || isGraded) ? "inline-block" : "none";
+  document.getElementById("modeHint").innerHTML = isQuiz
+    ? `🎮 <strong>學生闖關模式</strong>：像真實比賽一樣沒有加粗提示！細讀每句話，塗出四類重點後按「✅ 交卷批改」。`
+    : `🎓 <strong>老師示範模式</strong>：按鍵盤 <code>1~4</code> 切四色筆，直接點擊下方題目段落塗色給學生看！`;
+
+  const scoreBox = document.getElementById("scoreBox");
+  if (isQuiz && isGraded) scoreBox.classList.add("show");
+  else scoreBox.classList.remove("show");
+
+  const trapBox = document.getElementById("trapBox");
+  if ((isQuiz && isGraded) || (!isQuiz && isRevealed)) {
+    document.getElementById("trapText").textContent = ex.trapSummary;
+    trapBox.classList.add("show");
+  } else {
+    trapBox.classList.remove("show");
+  }
+}
+
+function gradeCurrent() {
+  const ex = getExam(currentExamId);
+  const segs = getAllSegments(ex);
+  const marks = marksByExam[ex.id] || {};
+  let targets = 0, exact = 0, wrongColor = 0, missed = 0, extra = 0;
+
+  segs.forEach(s => {
+    const m = marks[s.id];
+    if (s.ans) {
+      targets++;
+      if (m === s.ans) exact++;
+      else if (m) wrongColor++;
+      else missed++;
+    } else if (m) {
+      extra++;
+    }
+  });
+
+  const raw = ((exact + wrongColor * 0.5) / Math.max(targets, 1)) * 100 - extra * 4;
+  const score = Math.max(0, Math.min(100, Math.round(raw)));
+
+  gradedByExam[ex.id] = true;
+  if (bestScoreByExam[ex.id] === undefined || score > bestScoreByExam[ex.id]) {
+    bestScoreByExam[ex.id] = score;
+    saveProgress();
+  }
+
+  document.getElementById("scoreNum").textContent = `${score} 分`;
+  document.getElementById("scoreBadge").textContent =
+    score >= 90 ? "🏆 讀題神探！" :
+    score >= 75 ? "👍 很不錯，快補齊漏網之魚！" :
+    score >= 50 ? "💪 抓到一半了，小心暗藏陷阱！" : "🧐 再細讀一次段落喔！";
+
+  document.getElementById("scoreStats").innerHTML = `
+    <span>✅ 命中 ${exact}/${targets}</span>
+    <span>🟡 換色 ${wrongColor}</span>
+    <span>🔴 漏抓 ${missed}</span>
+    ${extra ? `<span>⚪ 多畫 ${extra}</span>` : ""}
+  `;
+
+  document.getElementById("explainBox").innerHTML =
+    `批改完成！點擊題目中標示 <strong>「漏抓」</strong> 或 <strong>「換色」</strong> 的句子就能看解析，上方也解鎖了「🕵️ 本題暗藏陷阱」！`;
+
+  renderPicker();
+  renderExam();
+}
+
+// Mode Switch (Category tabs are bound dynamically in renderCatTabs)
+document.querySelectorAll(".mode-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    currentMode = btn.dataset.mode;
+    document.querySelectorAll(".mode-btn").forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
+    if (currentMode === "quiz") { seconds = 0; timerRunning = true; }
+    renderExam();
+  });
+});
+
+// Pens
+function selectPen(pen) {
+  currentPen = pen;
+  document.querySelectorAll(".pen-btn").forEach(b => {
+    b.setAttribute("aria-pressed", String(b.dataset.pen === pen));
+  });
+}
+
+document.querySelectorAll(".pen-btn").forEach(btn => {
+  btn.addEventListener("click", () => selectPen(btn.dataset.pen));
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
+  const map = { "1": "core", "2": "bonus", "3": "goal", "4": "theme", "e": "eraser", "E": "eraser" };
+  if (map[e.key]) selectPen(map[e.key]);
+});
+
+// Action Buttons
+document.getElementById("btnGrade").addEventListener("click", gradeCurrent);
+
+document.getElementById("btnReveal").addEventListener("click", () => {
+  const ex = getExam(currentExamId);
+  const segs = getAllSegments(ex);
+  const marks = {};
+  segs.forEach(s => { if (s.ans) marks[s.id] = s.ans; });
+  marksByExam[ex.id] = marks;
+  gradedByExam[ex.id] = false;
+  revealedByExam[ex.id] = true;
+  saveProgress();
+  document.getElementById("explainBox").innerHTML =
+    "已套用標準四色畫法！點擊任何一段有顏色的文字即可看解析，右側也已顯示「🕵️ 本題暗藏陷阱」。";
+  renderExam();
+});
+
+document.getElementById("btnClear").addEventListener("click", () => {
+  const ex = getExam(currentExamId);
+  marksByExam[ex.id] = {};
+  gradedByExam[ex.id] = false;
+  revealedByExam[ex.id] = false;
+  saveProgress();
+  document.getElementById("explainBox").innerHTML = "已清除本題所有標記，可以重新開始塗色！";
+  renderExam();
+});
+
+document.getElementById("btnCopy").addEventListener("click", () => {
+  const ex = getExam(currentExamId);
+  const marks = marksByExam[ex.id] || {};
+  const segs = getAllSegments(ex);
+  let out = `【${ex.title}｜四色讀題筆記】\n\n`;
+  ["core", "bonus", "goal", "theme"].forEach(k => {
+    const items = segs.filter(s => marks[s.id] === k);
+    if (items.length) {
+      out += `${PEN_META[k].emoji} ${PEN_META[k].name}\n`;
+      items.forEach(it => { out += `- [ ] ${it.text}\n`; });
+      out += "\n";
+    }
+  });
+  navigator.clipboard.writeText(out).then(() => {
+    const btn = document.getElementById("btnCopy");
+    const old = btn.textContent;
+    btn.textContent = "✅ 已複製";
+    setTimeout(() => { btn.textContent = old; }, 1500);
+  });
+});
+
+document.getElementById("btnPrint").addEventListener("click", () => window.print());
+
+renderCatTabs();
+renderPicker();
+renderExam();
+</script>
+</body>
+</html>
